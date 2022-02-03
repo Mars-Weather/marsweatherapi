@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 
+// This is for the Sol class & Sol Context, add ones for your own classes below!
 builder.Services.AddDbContext<SolContext>(opt =>
     opt.UseInMemoryDatabase("SolList"));
 
