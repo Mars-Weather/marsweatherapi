@@ -9,7 +9,7 @@ namespace MarsWeatherApi.Models
         public DateTime Start { get; set; }
         public DateTime End { get; set; }
         public string Season { get; set; }
-
+        public int SolNumber { get; set; }
 
     }
 }
