@@ -25,6 +25,8 @@ namespace MarsWeatherApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Sol>>> GetSols()
         {
+            Console.WriteLine("GetSols-metodia kutsuttu");
+            System.Diagnostics.Debug.WriteLine("GetSols-metodia kutsuttu");
             return await _context.Sols.ToListAsync();
         }
 
@@ -81,7 +83,8 @@ namespace MarsWeatherApi.Controllers
             _context.Sols.Add(sol);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
+            //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
+            return CreatedAtAction(nameof(GetSol), new { id = sol.Id }, sol);
         }
 
         // DELETE: api/Sol/5
