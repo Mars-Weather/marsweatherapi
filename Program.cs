@@ -14,6 +14,10 @@ builder.Services.AddDbContext<SolContext>(opt =>
 builder.Services.AddDbContext<PressureContext>(opt =>
     opt.UseInMemoryDatabase("PressureList"));
 
+// This is for the Wind class & Wind Context
+builder.Services.AddDbContext<WindContext>(opt =>
+    opt.UseInMemoryDatabase("WindList"));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 //builder.Services.AddSwaggerGen();
