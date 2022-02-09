@@ -6,6 +6,7 @@
 // using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MarsWeatherApi.Contexts;
 using MarsWeatherApi.Models;
 
 namespace MarsWeatherApi.Controllers
@@ -14,9 +15,9 @@ namespace MarsWeatherApi.Controllers
     [ApiController]
     public class PressureController : ControllerBase
     {
-        private readonly PressureContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public PressureController(PressureContext context)
+        public PressureController(ApplicationDbContext context)
         {
             _context = context;
         }
