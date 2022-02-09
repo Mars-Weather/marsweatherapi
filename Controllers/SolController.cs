@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using MarsWeatherApi.Contexts;
 using MarsWeatherApi.Models;
 
 namespace MarsWeatherApi.Controllers
@@ -14,9 +15,9 @@ namespace MarsWeatherApi.Controllers
     [ApiController]
     public class SolController : ControllerBase
     {
-        private readonly SolContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public SolController(SolContext context)
+        public SolController(ApplicationDbContext context)
         {
             _context = context;
         }
