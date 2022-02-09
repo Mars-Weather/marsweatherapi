@@ -7,7 +7,6 @@ namespace MarsWeatherApi.Models
         public float minimum { get; set; }
         public float maximum { get; set; }
         public string? mostCommonDirection { get; set; }
-
-        //int sol_id { get; set; }
+        int sol_id { get; set; }
     }
 }
