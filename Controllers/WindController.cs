@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Models;
+using MarsWeatherApi.Contexts;
 
 namespace MarsWeatherApi.Controllers
 {
@@ -14,9 +15,9 @@ namespace MarsWeatherApi.Controllers
     [ApiController]
     public class WindController : ControllerBase
     {
-        private readonly WindContext _context;
+        private readonly ApplicationDbContext _context;
 
-        public WindController(WindContext context)
+        public WindController(ApplicationDbContext context)
         {
             _context = context;
         }
