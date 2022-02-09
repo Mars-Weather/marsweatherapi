@@ -25,8 +25,6 @@ namespace MarsWeatherApi.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Sol>>> GetSols()
         {
-            Console.WriteLine("GetSols-metodia kutsuttu");
-            System.Diagnostics.Debug.WriteLine("GetSols-metodia kutsuttu");
             return await _context.Sols.ToListAsync();
         }
 
