@@ -22,19 +22,19 @@ namespace MarsWeatherApi.Contexts {
             modelBuilder.Entity<Sol>()
                 .HasOne(a => a.Wind)
                 .WithOne(i => i.Sol)
-                .HasForeignKey<Wind>(b => b.SolForeignKey);
+                .HasForeignKey<Wind>(b => b.SolId);
 
             // temperature
             modelBuilder.Entity<Sol>()
                 .HasOne(a => a.Temperature)
                 .WithOne(i => i.Sol)
-                .HasForeignKey<Temperature>(b => b.SolForeignKey);
+                .HasForeignKey<Temperature>(b => b.SolId);
 
             // pressure
             modelBuilder.Entity<Sol>()
                 .HasOne(a => a.Pressure)
                 .WithOne(i => i.Sol)
-                .HasForeignKey<Pressure>(b => b.SolForeignKey);
+                .HasForeignKey<Pressure>(b => b.SolId);
         }
 
     }

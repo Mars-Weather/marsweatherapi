@@ -10,6 +10,6 @@ namespace MarsWeatherApi.Models
         public float Maximum { get; set; }
         public string? MostCommonDirection { get; set; }
         [JsonIgnore] public Sol? Sol { get; set; }
-        public int SolForeignKey { get; set; }
+        public int SolId { get; set; }
     }
 }
