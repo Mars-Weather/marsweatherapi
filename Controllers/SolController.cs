@@ -24,9 +24,29 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Sol
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Sol>>> GetSols()
+        /*public async Task<ActionResult<IEnumerable<Sol>>> GetSols()
         {
             return await _context.Sols.ToListAsync();
+        }*/
+        public async Task<IEnumerable<object>> GetSols()
+        {
+            // We're using anonymous object projections
+            // to build our response object. Since we
+            // are defining the LINQ query, there is a finite
+            // end to our results.
+            return await _context
+                .Sols
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Start,
+                    c.End,
+                    c.Season,
+                    c.SolNumber,
+                    c.Wind,
+                    c.Pressure,
+                    c.Temperature
+                }).ToListAsync();
         }
 
         // GET: api/Sol/5
