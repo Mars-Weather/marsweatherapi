@@ -24,9 +24,22 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Temperature
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Temperature>>> GetTemperatures()
+        /*public async Task<ActionResult<IEnumerable<Temperature>>> GetTemperatures()
         {
             return await _context.Temperatures.ToListAsync();
+        }*/
+        public async Task<IEnumerable<object>> GetTemperatures()
+        {
+            return await _context
+                .Temperatures
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Average,
+                    c.Minimum,
+                    c.Maximum,
+                    c.SolId
+                }).ToListAsync();
         }
 
         // GET: api/Temperature/5
