@@ -44,7 +44,7 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Wind/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Wind>> GetWind(int id)
+        public async Task<ActionResult<Wind>> GetWindById(int id)
         {
             var wind = await _context.Winds.FindAsync(id);
 
@@ -55,6 +55,11 @@ namespace MarsWeatherApi.Controllers
 
             return wind;
         }
+
+        /*GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLILLE
+        ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
+        VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
+        MUUTEN VASTAUKSESSA SOL ON NULL*/
 
         // PUT: api/Wind/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -96,7 +101,7 @@ namespace MarsWeatherApi.Controllers
             await _context.SaveChangesAsync();
             
             //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
-            return CreatedAtAction(nameof(GetWind), new { id = wind.Id }, wind);
+            return CreatedAtAction(nameof(GetWindById), new { id = wind.Id }, wind);
         }
 
         // DELETE: api/Wind/5

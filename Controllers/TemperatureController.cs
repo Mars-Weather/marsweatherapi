@@ -24,11 +24,11 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Temperature
         [HttpGet]
-        /*public async Task<ActionResult<IEnumerable<Temperature>>> GetTemperatures()
+        /*public async Task<ActionResult<IEnumerable<Temperature>>> GetAllTemperatures()
         {
             return await _context.Temperatures.ToListAsync();
         }*/
-        public async Task<IEnumerable<object>> GetTemperatures()
+        public async Task<IEnumerable<object>> GetAllTemperatures()
         {
             return await _context
                 .Temperatures
@@ -44,7 +44,7 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Temperature/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Temperature>> GetTemperature(int id)
+        public async Task<ActionResult<Temperature>> GetTemperatureById(int id)
         {
             var temperature = await _context.Temperatures.FindAsync(id);
 
@@ -55,6 +55,11 @@ namespace MarsWeatherApi.Controllers
 
             return temperature;
         }
+
+        /*GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLILLE
+        ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
+        VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
+        MUUTEN VASTAUKSESSA SOL ON NULL*/
 
         // PUT: api/Temperature/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -95,7 +100,8 @@ namespace MarsWeatherApi.Controllers
             _context.Temperatures.Add(temperature);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetTemperature", new { id = temperature.Id }, temperature);
+            //return CreatedAtAction("GetTemperature", new { id = temperature.Id }, temperature);
+            return CreatedAtAction(nameof(GetTemperatureById), new { id = temperature.Id }, temperature);
         }
 
         // DELETE: api/Temperature/5
