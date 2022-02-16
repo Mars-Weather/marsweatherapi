@@ -24,13 +24,13 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Pressure
         [HttpGet]
-        /*public async Task<ActionResult<IEnumerable<Pressure>>> GetPressures()
+        /*public async Task<ActionResult<IEnumerable<Pressure>>> GetAllPressures()
         {
-            Console.WriteLine("GetPressure-metodia kutsuttu");
-            System.Diagnostics.Debug.WriteLine("GetPressure-metodia kutsuttu");
+            Console.WriteLine("GetAllPressures-metodia kutsuttu");
+            System.Diagnostics.Debug.WriteLine("GetAllPressures-metodia kutsuttu");
             return await _context.Pressures.ToListAsync();
         }*/
-        public async Task<IEnumerable<object>> GetPressures()
+        public async Task<IEnumerable<object>> GetAllPressures()
         {
             return await _context
                 .Pressures
@@ -46,7 +46,7 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Pressure/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Pressure>> GetPressure(int id)
+        public async Task<ActionResult<Pressure>> GetPressureById(int id)
         {
             var pressure = await _context.Pressures.FindAsync(id);
 
@@ -57,6 +57,11 @@ namespace MarsWeatherApi.Controllers
 
             return pressure;
         }
+
+        /*GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLILLE
+        ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
+        VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
+        MUUTEN VASTAUKSESSA SOL ON NULL*/
 
         // PUT: api/Pressure/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -97,7 +102,7 @@ namespace MarsWeatherApi.Controllers
             _context.Pressures.Add(pressure);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetPressure), new { id = pressure.Id }, pressure);
+            return CreatedAtAction(nameof(GetPressureById), new { id = pressure.Id }, pressure);
         }
 
         // DELETE: api/Pressure/5
