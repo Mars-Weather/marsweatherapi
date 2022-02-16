@@ -12,8 +12,8 @@ builder.Services.AddControllers();
 /*builder.Services.AddControllers().AddJsonOptions(x =>
     x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);*/
 
-builder.Services.AddControllers().AddJsonOptions(x =>
-    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+/*builder.Services.AddControllers().AddJsonOptions(x =>
+    x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);*/
 
 // Add database Context
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
