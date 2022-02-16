@@ -24,10 +24,12 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Temperature
         [HttpGet]
+        // VANHA
         /*public async Task<ActionResult<IEnumerable<Temperature>>> GetAllTemperatures()
         {
             return await _context.Temperatures.ToListAsync();
         }*/
+        // UUSI
         public async Task<IEnumerable<object>> GetAllTemperatures()
         {
             return await _context
@@ -44,7 +46,8 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Temperature/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Temperature>> GetTemperatureById(int id)
+        // VANHA
+        /*public async Task<ActionResult<Temperature>> GetTemperatureById(int id)
         {
             var temperature = await _context.Temperatures.FindAsync(id);
 
@@ -54,12 +57,21 @@ namespace MarsWeatherApi.Controllers
             }
 
             return temperature;
+        }*/
+        // UUSI
+        public async Task<IEnumerable<object>> GetTemperatureById(int id)
+        {
+            return await _context
+                .Temperatures.Where(s => s.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Average,
+                    c.Minimum,
+                    c.Maximum,
+                    c.SolId
+                }).ToListAsync();
         }
-
-        /*GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLILLE
-        ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
-        VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
-        MUUTEN VASTAUKSESSA SOL ON NULL*/
 
         // PUT: api/Temperature/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
