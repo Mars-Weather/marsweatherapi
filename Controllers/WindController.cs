@@ -24,11 +24,13 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Wind
         [HttpGet]
+        // VANHA
         /*public async Task<ActionResult<IEnumerable<Wind>>> GetWinds()
         {
             return await _context.Winds.ToListAsync();
         }*/
-        public async Task<IEnumerable<object>> GetWinds()
+        // UUSI
+        public async Task<IEnumerable<object>> GetAllWinds()
         {
             return await _context
                 .Winds
@@ -38,13 +40,15 @@ namespace MarsWeatherApi.Controllers
                     c.Average,
                     c.Minimum,
                     c.Maximum,
+                    c.MostCommonDirection,
                     c.SolId
                 }).ToListAsync();
         }
 
         // GET: api/Wind/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Wind>> GetWindById(int id)
+        // VANHA
+        /*public async Task<ActionResult<Wind>> GetWindById(int id)
         {
             var wind = await _context.Winds.FindAsync(id);
 
@@ -54,12 +58,22 @@ namespace MarsWeatherApi.Controllers
             }
 
             return wind;
+        }*/
+        // UUSI
+        public async Task<IEnumerable<object>> GetWindById(int id)
+        {
+            return await _context
+                .Winds.Where(s => s.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Average,
+                    c.Minimum,
+                    c.Maximum,
+                    c.MostCommonDirection,
+                    c.SolId
+                }).ToListAsync();
         }
-
-        /*GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLILLE
-        ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
-        VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
-        MUUTEN VASTAUKSESSA SOL ON NULL*/
 
         // PUT: api/Wind/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
