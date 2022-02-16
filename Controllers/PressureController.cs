@@ -40,7 +40,6 @@ namespace MarsWeatherApi.Controllers
                     c.Average,
                     c.Minimum,
                     c.Maximum,
-                    c.Sol,
                     c.SolId
                 }).ToListAsync();
         }
