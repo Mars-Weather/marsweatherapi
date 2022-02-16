@@ -58,6 +58,20 @@ namespace MarsWeatherApi.Controllers
 
             return sol;
         }
+        /*public async Task<ActionResult<Sol>> GetSol(int id)
+        {
+            var sol = await _context.Sols.FindAsync(id);
+            if (sol == null)
+            {
+                return NotFound();
+            }
+
+            return new ActionResult<Sol> {
+                sol.Id,
+                sol.Start
+            }
+
+        } KESKEN */
 
         // PUT: api/Sol/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
