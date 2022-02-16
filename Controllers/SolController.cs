@@ -24,11 +24,11 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Sol
         [HttpGet]
-        /*public async Task<ActionResult<IEnumerable<Sol>>> GetSols()
+        /*public async Task<ActionResult<IEnumerable<Sol>>> GetAllSols()
         {
             return await _context.Sols.ToListAsync();
         }*/
-        public async Task<IEnumerable<object>> GetSols()
+        public async Task<IEnumerable<object>> GetAllSols()
         {
             return await _context
                 .Sols
@@ -47,7 +47,7 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Sol/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Sol>> GetSol(int id)
+        public async Task<ActionResult<Sol>> GetSolById(int id)
         {
             var sol = await _context.Sols.FindAsync(id);
 
@@ -58,7 +58,7 @@ namespace MarsWeatherApi.Controllers
 
             return sol;
         }
-        /*public async Task<ActionResult<Sol>> GetSol(int id)
+        /*public async Task<ActionResult<Sol>> GetSolById(int id)
         {
             var sol = await _context.Sols.FindAsync(id);
             if (sol == null)
@@ -71,7 +71,11 @@ namespace MarsWeatherApi.Controllers
                 sol.Start
             }
 
-        } KESKEN */
+        } KESKEN
+        SOLIN GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLSOLSILLE
+        ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
+        VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
+        MUUTEN VASTAUKSESSA TEMPERATURE, WIND JA PRESSURE ON NULL */
 
         // PUT: api/Sol/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
@@ -113,7 +117,7 @@ namespace MarsWeatherApi.Controllers
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
-            return CreatedAtAction(nameof(GetSol), new { id = sol.Id }, sol);
+            return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);
         }
 
         // DELETE: api/Sol/5
