@@ -24,11 +24,11 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Sol
         [HttpGet]
-        /*public async Task<ActionResult<IEnumerable<Sol>>> GetSols()
+        public async Task<ActionResult<IEnumerable<Sol>>> GetSols()
         {
             return await _context.Sols.ToListAsync();
-        }*/
-        public async Task<IEnumerable<object>> GetSols()
+        }
+        /*public async Task<IEnumerable<object>> GetSols()
         {
             // We're using anonymous object projections
             // to build our response object. Since we
@@ -47,7 +47,7 @@ namespace MarsWeatherApi.Controllers
                     c.Pressure,
                     c.Temperature
                 }).ToListAsync();
-        }
+        }*/
 
         // GET: api/Sol/5
         [HttpGet("{id}")]
