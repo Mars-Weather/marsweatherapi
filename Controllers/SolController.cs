@@ -24,10 +24,12 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Sol
         [HttpGet]
+        // VANHA
         /*public async Task<ActionResult<IEnumerable<Sol>>> GetAllSols()
         {
             return await _context.Sols.ToListAsync();
         }*/
+        // UUSI
         public async Task<IEnumerable<object>> GetAllSols()
         {
             return await _context
@@ -47,6 +49,7 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Sol/5
         [HttpGet("{id}")]
+        // VANHA
         /*public async Task<ActionResult<Sol>> GetSolById(int id)
         {
             var sol = await _context.Sols.FindAsync(id);
@@ -58,29 +61,23 @@ namespace MarsWeatherApi.Controllers
 
             return sol;
         }*/
-        public async Task<ActionResult> GetSolById(int id)
+        // UUSI
+        public async Task<IEnumerable<object>> GetSolById(int id)
         {
-            var sol = await _context.Sols
-                .Include(s => s.Wind)
-                .Include(s => s.Temperature)
-                .Include(s => s.Pressure)
-                .Include(s => s.Start)
-                .Include(s => s.End)
-                .Include(s => s.Season)
-                .Include(s => s.SolNumber)
-                .FirstOrDefaultAsync(s => s.Id == id);
-
-            if (sol == null) {
-                return NotFound();
-            }
-            return Ok(sol);
-
+            return await _context
+                .Sols.Where(s => s.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Start,
+                    c.End,
+                    c.Season,
+                    c.SolNumber,
+                    c.Wind,
+                    c.Pressure,
+                    c.Temperature
+                }).ToListAsync();
         }
-        /*KESKEN, YLLÄOLEVA EI TOIMI
-        GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLILLE
-        ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
-        VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
-        MUUTEN VASTAUKSESSA TEMPERATURE, WIND JA PRESSURE ON NULL */
 
         // PUT: api/Sol/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
