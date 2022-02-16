@@ -47,7 +47,7 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Sol/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Sol>> GetSolById(int id)
+        /*public async Task<ActionResult<Sol>> GetSolById(int id)
         {
             var sol = await _context.Sols.FindAsync(id);
 
@@ -57,21 +57,26 @@ namespace MarsWeatherApi.Controllers
             }
 
             return sol;
-        }
-        /*public async Task<ActionResult<Sol>> GetSolById(int id)
+        }*/
+        public async Task<ActionResult> GetSolById(int id)
         {
-            var sol = await _context.Sols.FindAsync(id);
-            if (sol == null)
-            {
+            var sol = await _context.Sols
+                .Include(s => s.Wind)
+                .Include(s => s.Temperature)
+                .Include(s => s.Pressure)
+                .Include(s => s.Start)
+                .Include(s => s.End)
+                .Include(s => s.Season)
+                .Include(s => s.SolNumber)
+                .FirstOrDefaultAsync(s => s.Id == id);
+
+            if (sol == null) {
                 return NotFound();
             }
+            return Ok(sol);
 
-            return new ActionResult<Sol> {
-                sol.Id,
-                sol.Start
-            }
-
-        } KESKEN
+        }
+        /*KESKEN, YLLÄOLEVA EI TOIMI
         GETBYID:LLE PITÄISI TEHDÄ SAMA TEMPPU KUIN GETALLILLE
         ELI EI PALAUTETA SUORAAN OLIOTA TIETOKANNASTA
         VAAN VALITAAN PALAUTETTAVAT ATTRIBUUTIT
