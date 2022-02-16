@@ -24,11 +24,25 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Pressure
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Pressure>>> GetPressures()
+        /*public async Task<ActionResult<IEnumerable<Pressure>>> GetPressures()
         {
             Console.WriteLine("GetPressure-metodia kutsuttu");
             System.Diagnostics.Debug.WriteLine("GetPressure-metodia kutsuttu");
             return await _context.Pressures.ToListAsync();
+        }*/
+        public async Task<IEnumerable<object>> GetPressures()
+        {
+            return await _context
+                .Pressures
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Average,
+                    c.Minimum,
+                    c.Maximum,
+                    c.Sol,
+                    c.SolId
+                }).ToListAsync();
         }
 
         // GET: api/Pressure/5
