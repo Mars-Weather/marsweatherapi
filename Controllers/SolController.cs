@@ -61,8 +61,8 @@ namespace MarsWeatherApi.Controllers
 
             return sol;
         }*/
-        // UUSI
-        public async Task<IEnumerable<object>> GetSolById(int id)
+        // VANHA
+       /* public async Task<IEnumerable<object>> GetSolById(int id)
         {
             return await _context
                 .Sols.Where(s => s.Id == id)
@@ -77,6 +77,33 @@ namespace MarsWeatherApi.Controllers
                     c.Pressure,
                     c.Temperature
                 }).ToListAsync();
+        }*/
+        // UUSI 
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetSolById(int id)
+        {
+            var soltry = _context.Sols.Find(id);
+            if (soltry == null)
+            {
+                return NotFound();
+            }
+
+            var solfound = _context
+                .Sols.Where(s => s.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Start,
+                    c.End,
+                    c.Season,
+                    c.SolNumber,
+                    c.Wind,
+                    c.Pressure,
+                    c.Temperature
+                }).ToListAsync();
+
+            return Ok(solfound);
         }
 
         // PUT: api/Sol/5
