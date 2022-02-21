@@ -101,7 +101,7 @@ namespace MarsWeatherApi.Controllers
                     c.Wind,
                     c.Pressure,
                     c.Temperature
-                }).ToListAsync();
+                }).ToList();
 
             return Ok(solfound);
         }

@@ -95,7 +95,7 @@ namespace MarsWeatherApi.Controllers
                     c.Maximum,
                     c.MostCommonDirection,
                     c.SolId
-                }).ToListAsync(); // tämä syynä ylimääräiseen JSONiin?
+                }).ToList();
 
             return Ok(windfound);
         }
