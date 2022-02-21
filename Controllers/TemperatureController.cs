@@ -94,7 +94,7 @@ namespace MarsWeatherApi.Controllers
                     c.Minimum,
                     c.Maximum,
                     c.SolId
-                }).ToListAsync();
+                }).ToList();
 
             return Ok(temperaturefound);
         }
