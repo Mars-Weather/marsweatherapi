@@ -60,7 +60,8 @@ namespace MarsWeatherApi.Controllers
 
             return pressure;
         }*/
-        // UUSI
+        // VANHA
+        /*
         public async Task<IEnumerable<object>> GetPressureById(int id)
         {
             return await _context
@@ -73,6 +74,31 @@ namespace MarsWeatherApi.Controllers
                     c.Maximum,
                     c.SolId
                 }).ToListAsync();
+        } */
+
+        // UUSI
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetPressureById(int id)
+        {
+            var pressuretry = _context.Pressures.Find(id);
+            if (pressuretry == null)
+            {
+                return NotFound();
+            }
+
+            var pressurefound = _context
+                .Pressures.Where(p => p.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Average,
+                    c.Minimum,
+                    c.Maximum,
+                    c.SolId
+                }).ToListAsync();
+
+            return Ok(pressurefound);
         }
 
         // PUT: api/Pressure/5

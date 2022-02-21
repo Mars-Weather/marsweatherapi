@@ -59,8 +59,8 @@ namespace MarsWeatherApi.Controllers
 
             return wind;
         }*/
-        // UUSI
-        public async Task<IEnumerable<object>> GetWindById(int id)
+        // VANHA
+        /*public async Task<IEnumerable<object>> GetWindById(int id)
         {
             return await _context
                 .Winds.Where(s => s.Id == id)
@@ -73,6 +73,31 @@ namespace MarsWeatherApi.Controllers
                     c.MostCommonDirection,
                     c.SolId
                 }).ToListAsync();
+        }*/
+        // UUSI
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetWindById(int id)
+        {
+            var windtry = _context.Winds.Find(id);
+            if (windtry == null)
+            {
+                return NotFound();
+            }
+
+            var windfound = _context
+                .Winds.Where(w => w.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Average,
+                    c.Minimum,
+                    c.Maximum,
+                    c.MostCommonDirection,
+                    c.SolId
+                }).ToListAsync(); // tämä syynä ylimääräiseen JSONiin?
+
+            return Ok(windfound);
         }
 
         // PUT: api/Wind/5
