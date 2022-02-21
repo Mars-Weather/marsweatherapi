@@ -1,4 +1,4 @@
-using Newtonsoft.Json;
+using System.Text.Json.Serialization;
 
 namespace MarsWeatherApi.Models
 {
@@ -8,6 +8,8 @@ namespace MarsWeatherApi.Models
         public float Average { get; set; }
         public float Minimum { get; set; }
         public float Maximum { get; set; }
+
+        [JsonIgnore]
         public Sol? Sol { get; set; }
         public int SolId { get; set; }
     }
