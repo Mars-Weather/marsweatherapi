@@ -58,7 +58,8 @@ namespace MarsWeatherApi.Controllers
 
             return temperature;
         }*/
-        // UUSI
+        // VANHA
+        /*
         public async Task<IEnumerable<object>> GetTemperatureById(int id)
         {
             return await _context
@@ -71,6 +72,31 @@ namespace MarsWeatherApi.Controllers
                     c.Maximum,
                     c.SolId
                 }).ToListAsync();
+        } */
+
+        // UUSI
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetTemperatureById(int id)
+        {
+            var temperaturetry = _context.Temperatures.Find(id);
+            if (temperaturetry == null)
+            {
+                return NotFound();
+            }
+
+            var temperaturefound = _context
+                .Temperatures.Where(t => t.Id == id)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Average,
+                    c.Minimum,
+                    c.Maximum,
+                    c.SolId
+                }).ToListAsync();
+
+            return Ok(temperaturefound);
         }
 
         // PUT: api/Temperature/5
