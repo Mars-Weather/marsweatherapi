@@ -13,7 +13,10 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 // Add database Context
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-    opt.UseInMemoryDatabase("MarsWeatherApiDB"));
+    opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+    
+
+    //UseInMemoryDatabase("MarsWeatherApiDB"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
