@@ -106,6 +106,31 @@ namespace MarsWeatherApi.Controllers
             return Ok(solfound);
         }
 
+        
+        // GET: api/solNumber/200
+        [HttpGet("solNumber/{solNumber}")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public IActionResult GetSolBySolNumber(int solNumber)
+        {
+
+            var solfound = _context
+                .Sols.Where(s => s.SolNumber == solNumber)
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Start,
+                    c.End,
+                    c.Season,
+                    c.SolNumber,
+                    c.Wind,
+                    c.Pressure,
+                    c.Temperature
+                }).ToList();
+
+            return Ok(solfound);
+        }
+
         // PUT: api/Sol/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
