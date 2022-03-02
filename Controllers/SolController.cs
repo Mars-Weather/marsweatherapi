@@ -113,13 +113,6 @@ namespace MarsWeatherApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetSolBySolNumber(int solNumber)
         {
-            // some issue is here
-            
-            // var soltry = _context.Sols.Find(solNumber); 
-            // if (soltry == null)
-            // {
-            //     return NotFound();
-            // }  
 
             var solfound = _context
                 .Sols.Where(s => s.SolNumber == solNumber)
