@@ -105,7 +105,6 @@ namespace MarsWeatherApi.Controllers
 
             return Ok(solfound);
         }
-
         
         // GET: api/solNumber/200
         [HttpGet("solNumber/{solNumber}")]
@@ -128,7 +127,13 @@ namespace MarsWeatherApi.Controllers
                     c.Temperature
                 }).ToList();
 
-            return Ok(solfound);
+            if (solfound.Count != 0) {
+                return Ok(solfound);
+            }
+            else {
+                return NotFound();
+            }
+            
         }
 
         // PUT: api/Sol/5
