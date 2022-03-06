@@ -6,6 +6,7 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHostedService<MarsWeatherApi.DbUpdateService>(); // Background service for timed DB updates
 builder.Services.AddControllers();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
