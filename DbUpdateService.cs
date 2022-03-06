@@ -1,4 +1,6 @@
 using MarsWeatherApi.Contexts;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace MarsWeatherApi
 {
@@ -17,8 +19,20 @@ namespace MarsWeatherApi
             // Execute the background task as long as the application is run/is manually stopped
             while (!stoppingToken.IsCancellationRequested) 
             {
+                // TODO: Json deserialization, then refactor to its own method
 
-                // creates a new scope for each run, so DbContext can be accessed from a singleton
+                List<int> solKeys = new List<int>(); 
+
+                string filePath = "./assets/week1_sols100-106.json";
+                string jsonString = File.ReadAllText(filePath);
+
+                JsonNode marsWeekNode = JsonNode.Parse(jsonString)!;
+
+                JsonArray marsSolKeys = marsWeekNode!["sol_keys"]!.AsArray()!;
+
+                /* creates a new scope for each run, so DbContext can be accessed from a singleton, 
+                list comparing will be done below
+                */
                 using (var scope = _serviceProvider.CreateScope()) {
 
                     var scopedService = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -32,8 +46,8 @@ namespace MarsWeatherApi
                     }
                 }
 
-                // Sets the interval of the check with Timespan, can be ms/s/m/h
-                await Task.Delay(TimeSpan.FromSeconds(10), stoppingToken);
+                // Sets the interval of the check with Timespan, can be ms/s/m/h/d
+                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
             }
         }
 
