@@ -176,7 +176,8 @@ namespace MarsWeatherApi.Controllers
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
-            return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);
+            //return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);
+            return Ok(await _context.Sols.ToListAsync()); // <-- tämä vaikuttaa palauttavan, mutta SSL-sertifikaattiongelma oli
         }
 
         // DELETE: api/Sol/5
