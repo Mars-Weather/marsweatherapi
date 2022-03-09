@@ -106,7 +106,7 @@ namespace MarsWeatherApi.Controllers
             return Ok(solfound);
         }
         
-        // GET: api/solNumber/200
+        // GET: api/sol/solNumber/200
         [HttpGet("solNumber/{solNumber}")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
