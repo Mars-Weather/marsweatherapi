@@ -6,6 +6,7 @@ using System.Text.Json;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddHostedService<MarsWeatherApi.DbUpdateService>(); // Background service for timed DB updates
 builder.Services.AddControllers();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
@@ -14,7 +15,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 // Add database Context
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-//UseInMemoryDatabase("MarsWeatherApiDB"));
+    //UseInMemoryDatabase("MarsWeatherApiDB"));
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
