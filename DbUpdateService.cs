@@ -74,28 +74,34 @@ namespace MarsWeatherApi
         }
         private Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
         {
-            // TODO: Data validity checks and according operations
+            // TODO: Data validity checks and operations
+
+            JsonNode temperature = node![solKeyString]!["AT"]!;
+            JsonNode windSpeed = node![solKeyString]!["HWS"]!;
+            JsonNode windDirection = node![solKeyString]!["WD"]!["most_common"]!["compass_point"]!;
+            JsonNode pressure = node![solKeyString]!["PRE"]!;
+            JsonNode solValues = node![solKeyString]!;
 
             // Temperature value parsing
-            float averageTemperature = node![solKeyString]!["AT"]!["av"]!.GetValue<float>();
-            float minimumTemperature = node![solKeyString]!["AT"]!["mn"]!.GetValue<float>();
-            float maximumTemperature = node![solKeyString]!["AT"]!["mx"]!.GetValue<float>();
+            float averageTemperature = temperature["av"]!.GetValue<float>();
+            float minimumTemperature = temperature["mn"]!.GetValue<float>();
+            float maximumTemperature = temperature["mx"]!.GetValue<float>();
 
             // Wind value parsing
-            float averageSpeed = node![solKeyString]!["HWS"]!["av"]!.GetValue<float>();
-            float minimumSpeed = node![solKeyString]!["HWS"]!["mn"]!.GetValue<float>();
-            float maximumSpeed = node![solKeyString]!["HWS"]!["mx"]!.GetValue<float>();
-            string mostCommon = node![solKeyString]!["WD"]!["most_common"]!["compass_point"]!.GetValue<string>();
+            float averageSpeed = windSpeed["av"]!.GetValue<float>();
+            float minimumSpeed = windSpeed["mn"]!.GetValue<float>();
+            float maximumSpeed = windSpeed["mx"]!.GetValue<float>();
+            string mostCommon = windDirection.GetValue<string>();
 
             // Pressure value parsing
-            float averagePressure = node![solKeyString]!["PRE"]!["av"]!.GetValue<float>();
-            float minimumPressure = node![solKeyString]!["PRE"]!["mn"]!.GetValue<float>();
-            float maximumPressure = node![solKeyString]!["PRE"]!["av"]!.GetValue<float>();
+            float averagePressure = pressure["av"]!.GetValue<float>();
+            float minimumPressure = pressure["mn"]!.GetValue<float>();
+            float maximumPressure = pressure["av"]!.GetValue<float>();
 
             // Sol value parsing
-            DateTime start = node![solKeyString]!["First_UTC"]!.GetValue<DateTime>();
-            DateTime end = node![solKeyString]!["Last_UTC"]!.GetValue<DateTime>();
-            string season = node![solKeyString]!["Season"]!.GetValue<string>();
+            DateTime start = solValues["First_UTC"]!.GetValue<DateTime>();
+            DateTime end = solValues["Last_UTC"]!.GetValue<DateTime>();
+            string season = solValues["Season"]!.GetValue<string>();
 
             var createdSol = new Sol
                             {
