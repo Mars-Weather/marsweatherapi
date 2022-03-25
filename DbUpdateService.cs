@@ -15,11 +15,13 @@ namespace MarsWeatherApi
         "./assets/week4_sols121-127.json",
         "./assets/week5_sols128-134.json"
         };
+
         public DbUpdateService(IServiceProvider serviceProvider, ILogger<DbUpdateService> logger)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
         }
+
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             // Execute the background task as long as the application is run/is manually stopped
@@ -66,12 +68,14 @@ namespace MarsWeatherApi
                 await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
             }
         }
+        
         // Override, logs a graceful CTRL-C shutdown
         public override Task StopAsync(CancellationToken cancellationToken)
         {
             _logger.LogInformation("from DbUpdateService: StopAsync, Graceful Shutdown");
             return base.StopAsync(cancellationToken);
         }
+
         private Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
         {
             // TODO: Data validity checks and operations
