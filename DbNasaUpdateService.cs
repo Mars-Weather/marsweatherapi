@@ -4,13 +4,16 @@ using System.Text.Json.Nodes;
 
 namespace MarsWeatherApi
 {
-    public class DbNasaUpdateService : BackgroundService
+    public class DbNasaUpdateService : DbUpdateService
     {
-        private readonly ILogger<DbUpdateService> _logger;
-        private readonly IServiceProvider _serviceProvider;
+        // nämä tulevat suoraan yläluokasta
+        //private readonly ILogger<DbUpdateService> _logger;
+        //private readonly IServiceProvider _serviceProvider;
         private readonly IConfiguration _config;
 
-        public DbNasaUpdateService(IServiceProvider serviceProvider, ILogger<DbUpdateService> logger, IConfiguration config)
+        public DbNasaUpdateService() {}
+
+        public DbNasaUpdateService(IServiceProvider serviceProvider, ILogger<DbNasaUpdateService> logger, IConfiguration config)
         {
             _logger = logger;
             _serviceProvider = serviceProvider;
@@ -61,7 +64,7 @@ namespace MarsWeatherApi
                         
                             if(solKeyInt > latestSolNumber)
                             { 
-                                var createdSol = createSolFromJsonNode(marsWeekNode, solKeyString, solKeyInt);
+                                var createdSol = base.createSolFromJsonNode(marsWeekNode, solKeyString, solKeyInt);
                                 scopedService.Sols.Add(createdSol);
                                 scopedService.SaveChanges();
                             } else
@@ -90,7 +93,7 @@ namespace MarsWeatherApi
             return base.StopAsync(cancellationToken);
         }
 
-        private Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
+        /*private Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
         {
             // TODO: Data validity checks and operations
 
@@ -148,7 +151,7 @@ namespace MarsWeatherApi
                     SolNumber = solKeyInt
                 };
         return createdSol;                           
-        }
+        }*/
 
     }
 }
