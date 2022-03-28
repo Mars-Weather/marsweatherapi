@@ -1,9 +1,6 @@
 using MarsWeatherApi.Contexts;
 using MarsWeatherApi.Models;
 using System.Text.Json.Nodes;
-using System;
-using System.Net;
-using System.Net.Http;
 
 namespace MarsWeatherApi
 {
