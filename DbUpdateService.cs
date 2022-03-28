@@ -6,8 +6,8 @@ namespace MarsWeatherApi
 {
     public class DbUpdateService : BackgroundService
     {
-        private readonly ILogger<DbUpdateService> _logger;
-        private readonly IServiceProvider _serviceProvider;
+        public ILogger<DbUpdateService> _logger;
+        public IServiceProvider _serviceProvider;
         private readonly string[] _assetPaths = 
         {"./assets/week1_sols100-106.json",
         "./assets/week2_sols107-113.json",
@@ -15,6 +15,8 @@ namespace MarsWeatherApi
         "./assets/week4_sols121-127.json",
         "./assets/week5_sols128-134.json"
         };
+
+        public DbUpdateService() {}
 
         public DbUpdateService(IServiceProvider serviceProvider, ILogger<DbUpdateService> logger)
         {
@@ -76,7 +78,7 @@ namespace MarsWeatherApi
             return base.StopAsync(cancellationToken);
         }
 
-        private Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
+        public Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
         {
             // TODO: Data validity checks and operations
 
