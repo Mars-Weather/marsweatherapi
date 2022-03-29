@@ -11,7 +11,7 @@ namespace MarsWeatherApi
         //private readonly IServiceProvider _serviceProvider;
         private readonly IConfiguration _config;
 
-        public DbNasaUpdateService() {}
+        //public DbNasaUpdateService() {}
 
         public DbNasaUpdateService(IServiceProvider serviceProvider, ILogger<DbNasaUpdateService> logger, IConfiguration config)
         {
@@ -37,7 +37,8 @@ namespace MarsWeatherApi
                 // Continue only if the request was successful
                 if (response.IsSuccessStatusCode) 
                 {
-                    _logger.LogInformation("Response successful");
+                    _logger.LogInformation("Response successful, {DateTime}", DateTime.Now);
+
                     // creates a new scope for each run, so DbContext can be accessed from a singleton
                     using (var scope = _serviceProvider.CreateScope()) 
                     {
@@ -77,7 +78,7 @@ namespace MarsWeatherApi
                 }
                 else
                 {
-                    _logger.LogError("Request not successful. Status code: " + response.StatusCode);
+                    _logger.LogError("Request not successful. Status code: " + response.StatusCode + ", {DateTime}", DateTime.Now);
                 }
 
                 /* Sets the interval of the check with Timespan, can be ms/s/m/h/d
