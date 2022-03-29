@@ -1,5 +1,4 @@
 using MarsWeatherApi.Contexts;
-using MarsWeatherApi.Models;
 using System.Text.Json.Nodes;
 
 namespace MarsWeatherApi
@@ -82,8 +81,8 @@ namespace MarsWeatherApi
                 }
 
                 /* Sets the interval of the check with Timespan, can be ms/s/m/h/d
-                 in use should be relatively lengthy, at least 1h? */
-                await Task.Delay(TimeSpan.FromMinutes(1), stoppingToken);
+                The NASA data should contain the last 7 sols, so the check should be done at least every 7 days */                
+                await Task.Delay(TimeSpan.FromDays(6), stoppingToken);
             }
         }
         
