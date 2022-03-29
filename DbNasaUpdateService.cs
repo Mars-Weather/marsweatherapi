@@ -5,12 +5,7 @@ namespace MarsWeatherApi
 {
     public class DbNasaUpdateService : DbUpdateService
     {
-        // nämä tulevat suoraan yläluokasta
-        //private readonly ILogger<DbUpdateService> _logger;
-        //private readonly IServiceProvider _serviceProvider;
         private readonly IConfiguration _config;
-
-        //public DbNasaUpdateService() {}
 
         public DbNasaUpdateService(IServiceProvider serviceProvider, ILogger<DbNasaUpdateService> logger, IConfiguration config)
         {
@@ -92,66 +87,6 @@ namespace MarsWeatherApi
             _logger.LogInformation("from DbNasaUpdateService: StopAsync, Graceful Shutdown");
             return base.StopAsync(cancellationToken);
         }
-
-        /*private Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
-        {
-            // TODO: Data validity checks and operations
-
-            JsonNode temperature = node![solKeyString]!["AT"]!;
-            JsonNode windSpeed = node![solKeyString]!["HWS"]!;
-            JsonNode windDirection = node![solKeyString]!["WD"]!["most_common"]!["compass_point"]!;
-            JsonNode pressure = node![solKeyString]!["PRE"]!;
-            JsonNode solValues = node![solKeyString]!;
-
-            // Temperature value parsing
-            float averageTemperature = temperature["av"]!.GetValue<float>();
-            float minimumTemperature = temperature["mn"]!.GetValue<float>();
-            float maximumTemperature = temperature["mx"]!.GetValue<float>();
-
-            // Wind value parsing
-            float averageSpeed = windSpeed["av"]!.GetValue<float>();
-            float minimumSpeed = windSpeed["mn"]!.GetValue<float>();
-            float maximumSpeed = windSpeed["mx"]!.GetValue<float>();
-            string mostCommon = windDirection.GetValue<string>();
-
-            // Pressure value parsing
-            float averagePressure = pressure["av"]!.GetValue<float>();
-            float minimumPressure = pressure["mn"]!.GetValue<float>();
-            float maximumPressure = pressure["av"]!.GetValue<float>();
-
-            // Sol value parsing
-            DateTime start = solValues["First_UTC"]!.GetValue<DateTime>();
-            DateTime end = solValues["Last_UTC"]!.GetValue<DateTime>();
-            string season = solValues["Season"]!.GetValue<string>();
-
-            var createdSol = new Sol
-                {
-                    Wind = new Wind
-                    {
-                        Average = averageSpeed,
-                        Minimum = minimumSpeed,
-                        Maximum = maximumSpeed,
-                        MostCommonDirection = mostCommon  
-                    },
-                    Temperature = new Temperature
-                    {
-                        Average = averageTemperature,
-                        Minimum = minimumTemperature,
-                        Maximum = maximumTemperature
-                    },
-                    Pressure = new Pressure
-                    {
-                        Average = averagePressure,
-                        Minimum = minimumPressure,
-                        Maximum = maximumPressure
-                    },
-                    Start = start,
-                    End = end,
-                    Season = season,
-                    SolNumber = solKeyInt
-                };
-        return createdSol;                           
-        }*/
 
     }
 }
