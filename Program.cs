@@ -7,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddHostedService<MarsWeatherApi.DbUpdateService>(); // Background service for timed DB updates
+builder.Services.AddHostedService<MarsWeatherApi.DbNasaUpdateService>(); // / Background service for timed requests to Nasa's API
 builder.Services.AddControllers();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
