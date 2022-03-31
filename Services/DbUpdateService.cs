@@ -168,22 +168,22 @@ namespace MarsWeatherApi
                 {
                     Wind = new Wind
                     {
-                        Average = (float)averageSpeed,
-                        Minimum = (float)minimumSpeed,
-                        Maximum = (float)maximumSpeed,
+                        Average = averageSpeed != null ? averageSpeed : null,//(float)averageSpeed,
+                        Minimum = minimumSpeed != null ? minimumSpeed : null,//(float)minimumSpeed,
+                        Maximum = maximumSpeed != null ? maximumSpeed : null,//(float)maximumSpeed,
                         MostCommonDirection = mostCommon  
                     },
                     Temperature = new Temperature
                     {
-                        Average = (float)averageTemperature,
-                        Minimum = (float)minimumTemperature,
-                        Maximum = (float)maximumTemperature
+                        Average = averageTemperature != null ? averageTemperature : null,//(float)averageTemperature,
+                        Minimum = minimumTemperature != null ? minimumTemperature : null,//(float)minimumTemperature,
+                        Maximum = maximumTemperature != null ? maximumTemperature : null//(float)maximumTemperature
                     },
                     Pressure = new Pressure
                     {
-                        Average = (float)averagePressure,
-                        Minimum = (float)minimumPressure,
-                        Maximum = (float)maximumPressure
+                        Average = averagePressure != null ? averagePressure : null,//(float)averagePressure,
+                        Minimum = minimumPressure != null ? minimumPressure : null,//(float)minimumPressure,
+                        Maximum = maximumPressure != null ? maximumPressure : null,//(float)maximumPressure
                     },
                     Start = start,
                     End = end,
