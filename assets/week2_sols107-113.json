@@ -1016,7 +1016,7 @@
         "Last_UTC": "2012-04-26T19:59:40.201Z",
         "Season": "spring"
     },
-    "validity checks" : {
+    "validity_checks" : {
         "sols_checked": [
         107,
         108,

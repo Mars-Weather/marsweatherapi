@@ -1016,7 +1016,7 @@
         "Last_UTC": "2013-06-06T00:57:02.062Z",
         "Season": "summer"
     },  
-    "validity checks" : {
+    "validity_checks" : {
         "sol_hours_required": 18,
         "sols_checked": [
         114,

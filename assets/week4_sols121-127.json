@@ -1016,7 +1016,7 @@
         "Last_UTC": "2014-09-21T05:00:47.746Z",
         "Season": "fall"
     },
-    "validity checks" : {
+    "validity_checks" : {
         "sol_hours_required": 18,
         "sols_checked": [
         121,
