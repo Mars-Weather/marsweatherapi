@@ -89,7 +89,10 @@ namespace MarsWeatherApi
             JsonNode solValues = node![solKeyString]!;
 
             // Validity
-            JsonNode validity = node!["validity_checks"]![solKeyString]!;
+            bool temperatureValid = node!["validity_checks"]![solKeyString]!["AT"]!["valid"]!.GetValue<bool>();
+            bool windSpeedValid = node!["validity_checks"]![solKeyString]!["HWS"]!["valid"]!.GetValue<bool>();
+            bool windDirectionValid = node!["validity_checks"]![solKeyString]!["WD"]!["valid"]!.GetValue<bool>();
+            bool pressureValid = node!["validity_checks"]![solKeyString]!["PRE"]!["valid"]!.GetValue<bool>();
 
             // Setting up variables
             float? averageTemperature;
@@ -105,43 +108,45 @@ namespace MarsWeatherApi
             float? minimumPressure;
             float? maximumPressure;
 
-            // Temperature value parsing
-            bool temperatureValid = validity["AT"]!["valid"]!.GetValue<bool>();
-
-            if (temperatureValid==true)
+            // Temperature value parsing         
+            if (temperatureValid == true)
             {
                 averageTemperature = temperature["av"]!.GetValue<float>();
                 minimumTemperature = temperature["mn"]!.GetValue<float>();
                 maximumTemperature = temperature["mx"]!.GetValue<float>();
             }
-            else {
+            else 
+            {
                 averageTemperature = null;
                 minimumTemperature = null;
                 maximumTemperature = null;
             }
 
-            // Wind value parsing
-            bool windValid = validity["WD"]!["valid"]!.GetValue<bool>();
-
-            if (windValid==true)
+            // Wind value parsing   
+            if (windSpeedValid == true)
             {
                 averageSpeed = windSpeed["av"]!.GetValue<float>();
                 minimumSpeed = windSpeed["mn"]!.GetValue<float>();
-                maximumSpeed = windSpeed["mx"]!.GetValue<float>();
-                mostCommon = windDirection.GetValue<string>();
+                maximumSpeed = windSpeed["mx"]!.GetValue<float>();                
             }
             else 
             {
                 averageSpeed = null;
                 minimumSpeed = null;
                 maximumSpeed = null;
+                
+            }   
+            if (windDirectionValid == true)
+            {
+                mostCommon = windDirection.GetValue<string>();
+            } 
+            else
+            {
                 mostCommon = null;
-            }            
+            }      
 
             // Pressure value parsing
-            bool pressureValid = validity["PRE"]!["valid"]!.GetValue<bool>();
-
-            if (pressureValid==true)
+            if (pressureValid == true)
             {
                 averagePressure = pressure["av"]!.GetValue<float>();
                 minimumPressure = pressure["mn"]!.GetValue<float>();
