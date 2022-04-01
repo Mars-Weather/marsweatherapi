@@ -21,12 +21,12 @@ builder.Services.AddDbContext<ApplicationDbContext>(opt =>
     //UseInMemoryDatabase("MarsWeatherApiDB"));
 
 // Add CORS policy
-var AllowGETFromAllOrigins = "_AllowGETFromAllOrigins";
+var AllowGETFromAllOrigins = "AllowGETFromAllOrigins";
 builder.Services.AddCors(options =>
     {
         options.AddPolicy(name: AllowGETFromAllOrigins, builder =>
             {
-                builder.AllowAnyOrigin().WithMethods("GET");
+                builder.AllowAnyOrigin().AllowAnyHeader().WithMethods("GET");
             });
     }
 );

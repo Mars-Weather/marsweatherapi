@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
@@ -11,6 +12,7 @@ using MarsWeatherApi.Models;
 
 namespace MarsWeatherApi.Controllers
 {
+    [EnableCors("*", "*", "GET")]
     [Route("api/[controller]")]
     [ApiController]
     public class TemperatureController : ControllerBase
@@ -73,7 +75,6 @@ namespace MarsWeatherApi.Controllers
                     c.SolId
                 }).ToListAsync();
         } */
-
         // UUSI
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -101,6 +102,7 @@ namespace MarsWeatherApi.Controllers
 
         // PUT: api/Temperature/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [DisableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTemperature(int id, Temperature temperature)
         {
@@ -132,6 +134,7 @@ namespace MarsWeatherApi.Controllers
 
         // POST: api/Temperature
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [DisableCors]
         [HttpPost]
         public async Task<ActionResult<Temperature>> PostTemperature(Temperature temperature)
         {
@@ -143,6 +146,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // DELETE: api/Temperature/5
+        [DisableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTemperature(int id)
         {
