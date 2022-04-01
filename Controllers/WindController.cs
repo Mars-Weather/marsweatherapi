@@ -12,7 +12,7 @@ using MarsWeatherApi.Contexts;
 
 namespace MarsWeatherApi.Controllers
 {
-    [EnableCors("*", "*", "GET")]
+    [EnableCors(origins: "*", headers: "*", methods: "GET")]
     [Route("api/[controller]")]
     [ApiController]
     public class WindController : ControllerBase
