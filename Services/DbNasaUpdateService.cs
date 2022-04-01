@@ -64,7 +64,7 @@ namespace MarsWeatherApi
                                 scopedService.SaveChanges();
                             } else
                             {
-                                _logger.LogInformation("Sol " + solKeyInt + " not added, {DateTime}", DateTime.Now);
+                                _logger.LogInformation("Sol " + solKeyInt + " not added (already in the database), {DateTime}", DateTime.Now);
                             }                        
                         }                                        
                     }

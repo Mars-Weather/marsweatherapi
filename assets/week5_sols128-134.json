@@ -1016,7 +1016,7 @@
         "Last_UTC": "2015-12-06T00:40:21.202Z",
         "Season": "winter"
     }, 
-    "validity checks" : {
+    "validity_checks" : {
         "sol_hours_required": 18,
         "sols_checked": [
         128,

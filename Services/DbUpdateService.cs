@@ -60,7 +60,7 @@ namespace MarsWeatherApi
                                 scopedService.SaveChanges();
                             } else
                             {
-                                _logger.LogInformation("Sol " + solKeyInt + " not added, {DateTime}", DateTime.Now);
+                                _logger.LogInformation("Sol " + solKeyInt + " not added (already in the database), {DateTime}", DateTime.Now);
                             }                        
                         }
                     }                    
@@ -80,29 +80,59 @@ namespace MarsWeatherApi
 
         public Sol createSolFromJsonNode(JsonNode node, String solKeyString, int solKeyInt)
         {
-            // TODO: Data validity checks and operations
-
             JsonNode temperature = node![solKeyString]!["AT"]!;
             JsonNode windSpeed = node![solKeyString]!["HWS"]!;
             JsonNode windDirection = node![solKeyString]!["WD"]!["most_common"]!["compass_point"]!;
             JsonNode pressure = node![solKeyString]!["PRE"]!;
             JsonNode solValues = node![solKeyString]!;
 
-            // Temperature value parsing
-            float averageTemperature = temperature["av"]!.GetValue<float>();
-            float minimumTemperature = temperature["mn"]!.GetValue<float>();
-            float maximumTemperature = temperature["mx"]!.GetValue<float>();
+            // Validity checks
+            bool temperatureValid = node!["validity_checks"]![solKeyString]!["AT"]!["valid"]!.GetValue<bool>();
+            bool windSpeedValid = node!["validity_checks"]![solKeyString]!["HWS"]!["valid"]!.GetValue<bool>();
+            bool windDirectionValid = node!["validity_checks"]![solKeyString]!["WD"]!["valid"]!.GetValue<bool>();
+            bool pressureValid = node!["validity_checks"]![solKeyString]!["PRE"]!["valid"]!.GetValue<bool>();
 
-            // Wind value parsing
-            float averageSpeed = windSpeed["av"]!.GetValue<float>();
-            float minimumSpeed = windSpeed["mn"]!.GetValue<float>();
-            float maximumSpeed = windSpeed["mx"]!.GetValue<float>();
-            string mostCommon = windDirection.GetValue<string>();
+            // Set up variables as null (if validity checks are true, they're replaced with the real data)
+            float? averageTemperature = null;
+            float? minimumTemperature = null;
+            float? maximumTemperature = null;
+
+            float? averageSpeed = null;
+            float? minimumSpeed = null;
+            float? maximumSpeed = null;
+            string? mostCommon = null;
+
+            float? averagePressure = null;
+            float? minimumPressure = null;
+            float? maximumPressure = null;
+
+            // Temperature value parsing         
+            if (temperatureValid == true)
+            {
+                averageTemperature = temperature["av"]!.GetValue<float>();
+                minimumTemperature = temperature["mn"]!.GetValue<float>();
+                maximumTemperature = temperature["mx"]!.GetValue<float>();
+            }
+
+            // Wind value parsing   
+            if (windSpeedValid == true)
+            {
+                averageSpeed = windSpeed["av"]!.GetValue<float>();
+                minimumSpeed = windSpeed["mn"]!.GetValue<float>();
+                maximumSpeed = windSpeed["mx"]!.GetValue<float>();                
+            }
+            if (windDirectionValid == true)
+            {
+                mostCommon = windDirection.GetValue<string>();
+            }   
 
             // Pressure value parsing
-            float averagePressure = pressure["av"]!.GetValue<float>();
-            float minimumPressure = pressure["mn"]!.GetValue<float>();
-            float maximumPressure = pressure["av"]!.GetValue<float>();
+            if (pressureValid == true)
+            {
+                averagePressure = pressure["av"]!.GetValue<float>();
+                minimumPressure = pressure["mn"]!.GetValue<float>();
+                maximumPressure = pressure["av"]!.GetValue<float>();
+            }       
 
             // Sol value parsing
             DateTime start = solValues["First_UTC"]!.GetValue<DateTime>();
@@ -110,32 +140,34 @@ namespace MarsWeatherApi
             string season = solValues["Season"]!.GetValue<string>();
 
             var createdSol = new Sol
-                            {
-                                Wind = new Wind
-                                {
-                                    Average = averageSpeed,
-                                    Minimum = minimumSpeed,
-                                    Maximum = maximumSpeed,
-                                    MostCommonDirection = mostCommon  
-                                },
-                                Temperature = new Temperature
-                                {
-                                    Average = averageTemperature,
-                                    Minimum = minimumTemperature,
-                                    Maximum = maximumTemperature
-                                },
-                                Pressure = new Pressure
-                                {
-                                    Average = averagePressure,
-                                    Minimum = minimumPressure,
-                                    Maximum = maximumPressure
-                                },
-                                Start = start,
-                                End = end,
-                                Season = season,
-                                SolNumber = solKeyInt
-                            };
-        return createdSol;                           
+            {
+                Wind = new Wind
+                {
+                    Average = averageSpeed,
+                    Minimum = minimumSpeed,
+                    Maximum = maximumSpeed,
+                    MostCommonDirection = mostCommon  
+                },
+                Temperature = new Temperature
+                {
+                    Average = averageTemperature,
+                    Minimum = minimumTemperature,
+                    Maximum = maximumTemperature,
+                },
+                Pressure = new Pressure
+                {
+                    Average = averagePressure,
+                    Minimum = minimumPressure,
+                    Maximum = maximumPressure
+                },
+                Start = start,
+                End = end,
+                Season = season,
+                SolNumber = solKeyInt
+            };
+
+        return createdSol;  
+                                 
         }
     }
 }
