@@ -1,9 +1,10 @@
 #nullable disable
-// using System;
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
-// using Microsoft.AspNetCore.Http;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
@@ -11,6 +12,7 @@ using MarsWeatherApi.Models;
 
 namespace MarsWeatherApi.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "GET")]
     [Route("api/[controller]")]
     [ApiController]
     public class PressureController : ControllerBase
@@ -27,8 +29,6 @@ namespace MarsWeatherApi.Controllers
         // VANHA
         /*public async Task<ActionResult<IEnumerable<Pressure>>> GetAllPressures()
         {
-            Console.WriteLine("GetAllPressures-metodia kutsuttu");
-            System.Diagnostics.Debug.WriteLine("GetAllPressures-metodia kutsuttu");
             return await _context.Pressures.ToListAsync();
         }*/
         // UUSI
@@ -75,7 +75,6 @@ namespace MarsWeatherApi.Controllers
                     c.SolId
                 }).ToListAsync();
         } */
-
         // UUSI
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -103,6 +102,7 @@ namespace MarsWeatherApi.Controllers
 
         // PUT: api/Pressure/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [DisableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPressure(int id, Pressure pressure)
         {
@@ -134,6 +134,7 @@ namespace MarsWeatherApi.Controllers
 
         // POST: api/Pressure
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [DisableCors]
         [HttpPost]
         public async Task<ActionResult<Pressure>> PostPressure(Pressure pressure)
         {
@@ -144,6 +145,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // DELETE: api/Pressure/5
+        [DisableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePressure(int id)
         {
