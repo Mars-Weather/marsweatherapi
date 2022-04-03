@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using System.Web.Http.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
@@ -11,6 +12,7 @@ using MarsWeatherApi.Models;
 
 namespace MarsWeatherApi.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "GET")]
     [Route("api/[controller]")]
     [ApiController]
     public class SolController : ControllerBase
@@ -138,6 +140,7 @@ namespace MarsWeatherApi.Controllers
 
         // PUT: api/Sol/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [DisableCors]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutSol(int id, Sol sol)
         {
@@ -169,6 +172,7 @@ namespace MarsWeatherApi.Controllers
 
         // POST: api/Sol
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
+        [DisableCors]
         [HttpPost]
         public async Task<ActionResult<Sol>> PostSol(Sol sol)
         {
@@ -181,6 +185,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // DELETE: api/Sol/5
+        [DisableCors]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteSol(int id)
         {
