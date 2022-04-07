@@ -17,7 +17,7 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 
 // Add database Context
 builder.Services.AddDbContext<ApplicationDbContext>(opt =>
-    opt.UseMySQL(builder.Configuration.GetConnectionString("MYSQLCONNSTR_localdb")));
+    opt.UseMySQL(builder.Configuration.GetConnectionString("MYSQLCONNSTR_marsdb")));
     
     /* after opt. either of the two below to implement SQL server, 
     or an in-memory database */
