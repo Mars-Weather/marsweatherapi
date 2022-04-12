@@ -10,6 +10,5 @@ namespace MarsWeatherApi.Models
         public DateTime End { get; set; }
         public string? Season { get; set; }
         public int SolNumber { get; set; }
-
     }
 }
