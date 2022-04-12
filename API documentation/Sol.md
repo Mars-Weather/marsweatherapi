@@ -10,7 +10,7 @@ Returns a list of all Sols.
 
 **Method** : `GET`
 
-**Auth required** : NO
+**Auth required** : No
 
 ### Success Response
 
@@ -19,37 +19,56 @@ Returns a list of all Sols.
 **Content example** :
 
 A: There is no data in the database; an empty list is returned.
+
 ```json
 {
-    []
+    "$id": "1",
+    "$values": []
 }
 ```
 
 B: There is data in the database; a list containing Sols is returned.
 
 ```json
-[
-    {
-        "id": 1,
-        "wind": null,
-        "temperature": null,
-        "pressure": null,
-        "start": "2022-08-20T08:43:34Z",
-        "end": "2022-08-21T09:23:09Z",
-        "season": "Spring",
-        "solNumber": 1
-    },
-    {
-        "id": 2,
-        "wind": null,
-        "temperature": null,
-        "pressure": null,
-        "start": "2022-08-20T08:43:34Z",
-        "end": "2022-08-21T09:23:09Z",
-        "season": "Spring",
-        "solNumber": 2
-    }
-]
+{
+    "$id": "1",
+    "$values": [
+        {
+            "$id": "2",
+            "id": 1,
+            "start": "2011-01-27T12:02:41",
+            "end": "2011-01-28T12:42:16",
+            "season": "winter",
+            "solNumber": 100,
+            "wind": {
+                "$id": "3",
+                "id": 1,
+                "average": 3.165,
+                "minimum": 5.712,
+                "maximum": 14.807,
+                "mostCommonDirection": "NNW",
+                "solId": 1
+            },
+            "pressure": {
+                "$id": "4",
+                "id": 1,
+                "average": 773.3485,
+                "minimum": 745.2713,
+                "maximum": 773.3485,
+                "solId": 1
+            },
+            "temperature": {
+                "$id": "5",
+                "id": 1,
+                "average": -148.618,
+                "minimum": -50.991,
+                "maximum": -24.596,
+                "solId": 1
+            }
+        },
+        {...}
+    ]
+}
 ```
 
 ## Get one by id
@@ -60,7 +79,7 @@ Returns a specific Sol by id.
 
 **Method** : `GET`
 
-**Auth required** : NO
+**Auth required** : No
 
 ### Success Response
 
@@ -74,14 +93,109 @@ Returns the requested Sol.
 
 ```json
 {
-    "id": 1,
-    "wind": null,
-    "temperature": null,
-    "pressure": null,
-    "start": "2022-08-20T08:43:34Z",
-    "end": "2022-08-21T09:23:09Z",
-    "season": "Spring",
-    "solNumber": 1
+    "$id": "1",
+    "$values": [
+        {
+            "$id": "2",
+            "id": 1,
+            "start": "2011-01-27T12:02:41",
+            "end": "2011-01-28T12:42:16",
+            "season": "winter",
+            "solNumber": 100,
+            "wind": {
+                "$id": "3",
+                "id": 1,
+                "average": 3.165,
+                "minimum": 5.712,
+                "maximum": 14.807,
+                "mostCommonDirection": "NNW",
+                "solId": 1
+            },
+            "pressure": {
+                "$id": "4",
+                "id": 1,
+                "average": 773.3485,
+                "minimum": 745.2713,
+                "maximum": 773.3485,
+                "solId": 1
+            },
+            "temperature": {
+                "$id": "5",
+                "id": 1,
+                "average": -148.618,
+                "minimum": -50.991,
+                "maximum": -24.596,
+                "solId": 1
+            }
+        }
+    ]
+}
+```
+
+### Error Response
+
+**Condition** : Sol with the given id does not exist.
+
+**HTTP status code** : `404 Not Found`
+
+## Get one by Sol number
+
+Returns a specific Sol by Sol number.
+
+**URL** : `/api/sol/solnumber/{id}`
+
+**Method** : `GET`
+
+**Auth required** : No
+
+### Success Response
+
+**Condition** : Sol with the given Sol number exists.
+
+**HTTP status code** : `200 OK`
+
+**Content example** :
+
+Returns the requested Sol.
+
+```json
+{
+    "$id": "1",
+    "$values": [
+        {
+            "$id": "2",
+            "id": 11,
+            "start": "2012-04-06T13:36:51",
+            "end": "2012-04-07T14:16:26",
+            "season": "spring",
+            "solNumber": 110,
+            "wind": {
+                "$id": "3",
+                "id": 11,
+                "average": 6.612,
+                "minimum": 1.238,
+                "maximum": 17.547,
+                "mostCommonDirection": "S",
+                "solId": 11
+            },
+            "pressure": {
+                "$id": "4",
+                "id": 11,
+                "average": 773.5701,
+                "minimum": 756.7232,
+                "maximum": 773.5701,
+                "solId": 11
+            },
+            "temperature": {
+                "$id": "5",
+                "id": 11,
+                "average": 4.528,
+                "minimum": -83.552,
+                "maximum": -0.681,
+                "solId": 11
+            }
+        }
+    ]
 }
 ```
 
@@ -93,42 +207,42 @@ Returns the requested Sol.
 
 ## Post
 
-Adds a new Sol. Non-mandatory attributes left out from the request body default to 0 (or in case of a date, to 0001-01-01T00:00:00). Mandadory attributes left out from the request body cause an error.
+Adds a new Sol. Non-mandatory attributes left out from the request body default to 0 (or in case of a date, to 0001-01-01T00:00:00). Mandadory attributes left out from the request body or attributes of the wrong type cause an error.
 
 **URL** : `/api/sol/`
 
 **Method** : `POST`
 
-**Auth required** : YES
+**Auth required** : Yes
 
 **Request body example** :
 
 ```json
 {
     "Wind": {
-        "Average": 10.6,
-        "Minimum": 10.3,
-        "Maximum": 10.9,
-        "mostCommonDirection": "N"
+        "Average": 530.6,
+        "Minimum": 2220.3,
+        "Maximum": 8740.9,
+        "mostCommonDirection": "SW"
     },
     "Temperature": {
         "Average": 130.6,
-        "Minimum": 10.3,
-        "Maximum": 10.9
+        "Minimum": 5120.3,
+        "Maximum": 240.9
     },
     "Pressure": {
-        "Average": 10.6,
-        "Minimum": 20.3,
-        "Maximum": 40.9
+        "Average": 50.6,
+        "Minimum": 50.3,
+        "Maximum": 50.9
     },
-    "Start": "2022-08-20T08:43:34Z",
-    "End": "2022-08-21T09:23:09Z",
-    "Season": "Autumn",
-    "SolNumber": 2
+    "Start": "2030-02-12T08:43:34Z",
+    "End": "2030-02-13T09:23:09Z",
+    "Season": "Winter",
+    "SolNumber": 5000
 }
 ```
 
-### Success Response
+### Success Response KESKEN
 
 **Condition** : Sol was created successfully.
 
@@ -223,42 +337,39 @@ B
 
 ## Put
 
-Modifies an existing Sol by id.
+Modifies an existing Sol by id. Non-mandatory attributes left out from the request body default to 0 (or in case of a date, to 0001-01-01T00:00:00). Mandadory attributes left out from the request body or attributes of the wrong type cause an error.
 
 **URL** : `/api/sol/{id}`
 
 **Method** : `PUT`
 
-**Auth required** : YES
+**Auth required** : Yes
 
-**Request body example** :
+**Request body example** : Sent to `/api/sol/276`
 
 ```json
 {
-    "Id": 2,
+    "Id": 276,
     "Wind": {
-        "Average": 130.6,
-        "Minimum": 120.3,
-        "Maximum": 140.9,
-        "mostCommonDirection": "SW",
-        "Sol_id" : 2
+        "Average": 530.6,
+        "Minimum": 2220.3,
+        "Maximum": 8740.9,
+        "mostCommonDirection": "SW"
     },
     "Temperature": {
         "Average": 130.6,
-        "Minimum": 120.3,
-        "Maximum": 140.9,
-        "Sol_id" : 2
+        "Minimum": 5120.3,
+        "Maximum": 240.9
     },
     "Pressure": {
-        "Average": 130.6,
-        "Minimum": 120.3,
-        "Maximum": 140.9,
-        "Sol_id" : 2
+        "Average": 50.6,
+        "Minimum": 50.3,
+        "Maximum": 50.9
     },
-    "Start": "2022-08-20T08:43:34Z",
-    "End": "2022-08-21T09:23:09Z",
+    "Start": "2025-02-12T08:43:34Z",
+    "End": "2025-02-13T09:23:09Z",
     "Season": "Winter",
-    "SolNumber": 2
+    "SolNumber": 2000
 }
 ```
 
@@ -267,6 +378,44 @@ Modifies an existing Sol by id.
 **Condition** : Sol with the given id exists, modified successfully.
 
 **HTTP status code** : `204 No Content`
+
+**Content example** :
+
+```json
+{
+    "$id": "1",
+    "id": 276,
+    "wind": {
+        "$id": "2",
+        "id": 0,
+        "average": 530.6,
+        "minimum": 2220.3,
+        "maximum": 8740.9,
+        "mostCommonDirection": "SW",
+        "solId": 0
+    },
+    "temperature": {
+        "$id": "3",
+        "id": 0,
+        "average": 130.6,
+        "minimum": 5120.3,
+        "maximum": 240.9,
+        "solId": 0
+    },
+    "pressure": {
+        "$id": "4",
+        "id": 0,
+        "average": 50.6,
+        "minimum": 50.3,
+        "maximum": 50.9,
+        "solId": 0
+    },
+    "start": "2025-02-12T08:43:34Z",
+    "end": "2025-02-13T09:23:09Z",
+    "season": "Modified season",
+    "solNumber": 2000
+}
+```
 
 ### Error Response
 
@@ -323,7 +472,7 @@ Deletes a specific Sol by id.
 
 **Method** : `DELETE`
 
-**Auth required** : No
+**Auth required** : Yes
 
 ### Success Response
 
