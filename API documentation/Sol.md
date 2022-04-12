@@ -4,7 +4,7 @@
 
 ## Get all
 
-Returns a list of all Sols.
+Returns all the Sols in the database.
 
 **URL** : `/api/sol/`
 
@@ -235,14 +235,14 @@ Adds a new Sol. Non-mandatory attributes left out from the request body default 
         "Minimum": 50.3,
         "Maximum": 50.9
     },
-    "Start": "2030-02-12T08:43:34Z",
-    "End": "2030-02-13T09:23:09Z",
+    "Start": "2035-02-12T08:43:34Z",
+    "End": "2035-02-13T09:23:09Z",
     "Season": "Winter",
-    "SolNumber": 5000
+    "SolNumber": 4000
 }
 ```
 
-### Success Response KESKEN
+### Success Response
 
 **Condition** : Sol was created successfully.
 
@@ -254,32 +254,37 @@ Returns the created Sol.
 
 ```json
 {
-    "id": 2,
+    "$id": "1",
+    "id": 312,
     "wind": {
-        "id": 2,
-        "average": 10.6,
-        "minimum": 10.3,
-        "maximum": 10.9,
-        "mostCommonDirection": "N"
+        "$id": "2",
+        "id": 311,
+        "average": 530.6,
+        "minimum": 2220.3,
+        "maximum": 8740.9,
+        "mostCommonDirection": "SW",
+        "solId": 312
     },
     "temperature": {
-        "id": 2,
+        "$id": "3",
+        "id": 311,
         "average": 130.6,
-        "minimum": 10.3,
-        "maximum": 10.9,
-        "sol_Id": 0
+        "minimum": 5120.3,
+        "maximum": 240.9,
+        "solId": 312
     },
     "pressure": {
-        "id": 2,
-        "average": 10.6,
-        "minimum": 20.3,
-        "maximum": 40.9,
-        "sol_Id": 0
+        "$id": "4",
+        "id": 312,
+        "average": 50.6,
+        "minimum": 50.3,
+        "maximum": 50.9,
+        "solId": 312
     },
-    "start": "2022-08-20T08:43:34Z",
-    "end": "2022-08-21T09:23:09Z",
-    "season": "Autumn",
-    "solNumber": 2
+    "start": "2035-02-12T08:43:34Z",
+    "end": "2035-02-13T09:23:09Z",
+    "season": "Winter",
+    "solNumber": 4000
 }
 ```
 
