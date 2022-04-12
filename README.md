@@ -1,6 +1,16 @@
-# Mars weather
+# Mars Weather
 
-## Käyttäjätarinat
+Tiimi: Heta Björklund, Joni Jaakkola, Christian Lindell, Dmitry Sinyavskiy ja Irina Tregub.
+
+## Johdanto
+
+Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi katsoa tämänhetkistä säätä, viimeisen viikon säätä, tai hakea säätiedot tietyltä päivältä. Sovellus hakee säätiedot NASAn avoimesta ["InSight: Mars Weather Service API"-rajapinnasta](api.nasa.gov/insight_weather). Lisää tietoa InSight-missiosta löytyy [täältä](https://mars.nasa.gov/insight/weather/) ja NASAn rajapinta on dokumentoitu [täällä](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf).
+
+## Järjestelmän määrittely
+
+Alla kuvattuna järjestelmän tarpeet tarkemmin käyttäjätarinoiden kautta.
+
+### Käyttäjätarinat
 
 KT1 Tähtitieteen harrastajana haluan nähdä, millainen sää Marsissa on nyt, jotta voin verrata säätilaa kaukoputkella tekemiini näköhavaintoihin. 
 
@@ -21,3 +31,54 @@ KT8 Tulevana avaruusmatkailijana haluan saada lämpötilatiedot eri lämpötilay
 KT9 Tähtitieteen opiskelijana haluan saada mahdollisia tilastotietoja (esim. Päivän/viikon/vuoden matalin ja korkein lämpötila, tuulen keskinopeus).
 
 KT10 Avaruusmatkailijana haluaisin tietää tulevaa säätä, mutta jos sovellus ei tee sääennustuksia, minua auttaisi, jos olisi mahdollista saada tiedot valitulle päivälle, esimerkiksi sää X päivänä vuosi sitten.
+
+## Luokkakaavio
+
+Tulossa.
+
+## Tekninen toteutus
+
+### Back end
+
+Back end on toteutettu [ASP.NET Coren web-sovelluksena](https://docs.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-6.0&tabs=visual-studio-code).
+
+Back endin GitHub-repositorio löytyy osoitteesta https://github.com/Mars-Weather/marsweatherapi
+
+Syy siihen, että front end ei hae dataa suoraan Nasan rajapinnasta, vaan data kierrätetään oman back endin ja tietokannan kautta, on se, että vanhaa dataa voidaan tallentaa, näyttää historiatietoja (eikä ainoastaan viimeisintä 7 solia, jonka Nasan rajapinta palauttaa) ja luoda tilastoja sään vaihtelusta.
+
+Koska NASAn rajapinnasta ei aina saa luotettavaa dataa [Marsin sääolosuhteiden takia](https://mars.nasa.gov/news/8858/insight-is-meeting-the-challenge-of-winter-on-dusty-mars/?site=insight), sovellus käyttää myös generoitua dataa, joka on saman muotoista kuin oikea, NASAn rajapinnasta saatava data, mutta joka ei perustu oikeisiin mittauksiin.
+
+Projektissa on kolme haaraa: master, localdb ja remotedb.
+
+#### Master
+- master-haara on kehityshaara.
+- Tietokanta on InMemory-tietokanta. Tietokanta ei ole persistentti, vaan tiedot häviävät kun sovellus sammutetaan.
+- Endpointit ovat muotoa localhost:[portti]/api/sol
+
+#### Localdb
+- localdb-haara on testaushaara.
+- Tietokanta on Microsoft SQL Server. Tietokanta on persistentti, mutta sinne pääsee käsiksi vain paikallisesti.
+- Endpointit ovat muotoa localhost:[portti]/api/sol
+
+#### Remotedb
+- remotedb-haara on projektin tuotantohaara ja julkaistu versio.
+- Tietokanta on MySQL. Tietokanta on persistentti ja sitä voi hallinnoida ja muokata Azuren dashboardin kautta (ei julkinen, vain tiimin jäsenten saatavilla).
+- Tietokantaa voi tarkastella myös lähettämällä GET-pyyntöjä Postmanilla. Avoin pyyntökokoelma löytyy osoitteesta https://www.postman.com/hetabjorklund/workspace/mars-weather-public/
+- Julkaistun sovelluksen osoite on https://marsweather.azurewebsites.net/
+- Endpointit ovat muotoa https://marsweather.azurewebsites.net/api/sol
+
+### Front end
+
+Front end on toteutettu React Appina. 
+
+Front endin GitHub-repositorio löytyy osoitteesta https://github.com/Mars-Weather/marsweatherui
+
+Julkaistun front endin osoite on https://weather-mars.herokuapp.com/
+
+## Testaus
+
+Tulossa.
+
+
+
+
