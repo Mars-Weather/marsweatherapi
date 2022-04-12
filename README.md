@@ -34,7 +34,7 @@ KT10 Avaruusmatkailijana haluaisin tietää tulevaa säätä, mutta jos sovellus
 
 ## Luokkakaavio
 
-Tulossa.
+![Luokkakaavio](./assets/classdiagram.png)
 
 ## Tekninen toteutus
 
