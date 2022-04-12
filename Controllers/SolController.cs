@@ -167,7 +167,7 @@ namespace MarsWeatherApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(sol);
         }
 
         // POST: api/Sol
