@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Web.Http.Cors;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
@@ -100,21 +101,20 @@ namespace MarsWeatherApi.Controllers
             }
             else {
                 return NotFound();
-            }
-            
+            }            
         }
 
         // GET: api/sol/date?start=xxx&end=xxx where "xxx" are DateTimes
         [HttpGet("date")]
-        public IActionResult GetSolsByDate(DateTime start, DateTime end)
-        {
-            _logger.LogInformation("Date-polussa!");
-
+        public IActionResult GetSolsByDate([Required] DateTime start, [Required] DateTime end)
+        {     
             try
             {
                 var solsfound = _context
-                .Sols.Where(s => DateTime.Compare(s.Start, start) >=0
-                            || DateTime.Compare(s.End, end) <=0 )
+                .Sols.Where(s => (DateTime.Compare(s.Start, start) >=0
+                                && DateTime.Compare(s.Start, end) <0)
+                            || (DateTime.Compare(s.End, end) <=0 
+                                && DateTime.Compare(s.End, start) >0))
                 .Select(c => new
                 {
                     c.Id,
