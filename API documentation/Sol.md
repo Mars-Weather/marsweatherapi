@@ -207,11 +207,9 @@ Returns the requested Sol.
 
 ## Get Sols by date range
 
-Returns the Sols that fall within the requested date range. The start and end dates are mandatory and given as request parametres in UTC format (the time is optional; if left out, it defaults to 00:00:00). For example, the following requests will both return all the Sols that start or end during the year 2011:
+Returns the Sols that fall within the requested date range. The start and end dates are mandatory and given as request parametres in UTC format (the time is optional; if left out, it defaults to 00:00:00). For example, the following request returns all the Sols from the year 2011:
 
-api/sol/date?start=2011-01-01T00:00:00&end=2011-12-31T00:00:00
-
-api/sol/date?start=2011-01-01&end=2011-12-31
+api/sol/date?start=2011-01-01T00:00:00&end=2011-12-31T23:59:59
 
 **URL** : `/api/sol/date`
 
