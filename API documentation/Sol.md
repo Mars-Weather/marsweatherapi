@@ -205,6 +205,167 @@ Returns the requested Sol.
 
 **HTTP status code** : `404 Not Found`
 
+## Get Sols by date range
+
+Returns the Sols that fall within the requested date range. The start and end dates are mandatory and given as request parametres in UTC format (the time is optional; if left out, it defaults to 00:00:00). For example, the following requests will both return all the Sols that start or end during the year 2011:
+
+api/sol/date?start=2011-01-01T00:00:00&end=2011-12-31T00:00:00
+
+api/sol/date?start=2011-01-01&end=2011-12-31
+
+**URL** : `/api/sol/date`
+
+**Method** : `GET`
+
+**Auth required** : No
+
+### Success Response
+
+**Condition** : Both the start and end date are given, and both are valid as DateTime type.
+
+**HTTP status code** : `200 OK`
+
+**Content example** :
+
+A: No Sols match the parametres; an empty list is returned
+
+```json
+{
+    "$id": "1",
+    "$values": []
+}
+```
+
+B: There are Sols that match the parametres; a list containing the matching Sols is returned.
+```json
+{
+    "$id": "1",
+    "$values": [
+        {
+            "$id": "2",
+            "id": 277,
+            "start": "2011-01-27T21:27:05.425",
+            "end": "2011-01-28T22:06:40.425",
+            "season": "winter",
+            "solNumber": 101,
+            "wind": {
+                "$id": "3",
+                "id": 276,
+                "average": 8.675,
+                "minimum": 4.453,
+                "maximum": 15.203,
+                "mostCommonDirection": "WSW",
+                "solId": 277
+            },
+            "pressure": {
+                "$id": "4",
+                "id": 277,
+                "average": 752.6169,
+                "minimum": 753.4258,
+                "maximum": 752.6169,
+                "solId": 277
+            },
+            "temperature": {
+                "$id": "5",
+                "id": 276,
+                "average": -101.598,
+                "minimum": -76.022,
+                "maximum": -14.041,
+                "solId": 277
+            }
+        },
+        {
+            "$id": "6",
+            "id": 278,
+            "start": "2011-01-03T21:52:52.293",
+            "end": "2011-01-04T22:32:27.293",
+            "season": "winter",
+            "solNumber": 102,
+            "wind": {
+                "$id": "7",
+                "id": 277,
+                "average": 17.441,
+                "minimum": 8.088,
+                "maximum": 13.044,
+                "mostCommonDirection": "SE",
+                "solId": 278
+            },
+            "pressure": {
+                "$id": "8",
+                "id": 278,
+                "average": 761.1285,
+                "minimum": 756.1563,
+                "maximum": 761.1285,
+                "solId": 278
+            },
+            "temperature": {
+                "$id": "9",
+                "id": 277,
+                "average": -82.155,
+                "minimum": -149.209,
+                "maximum": -27.772,
+                "solId": 278
+            }
+        },
+        {...}
+    ]
+}
+```
+
+### Error Response
+
+A: 
+
+**Condition** : The start or end parameter (or both) are missing.
+
+**HTTP status code** : `400 Bad Request`
+
+**Content example** :
+
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+    "title": "One or more validation errors occurred.",
+    "status": 400,
+    "traceId": "00-9314353ec67b14145bd430e2c7ad5692-7daf1f25369917c4-00",
+    "errors": {
+        "end": [
+            "The end field is required."
+        ],
+        "start": [
+            "The start field is required."
+        ]
+    }
+}
+```
+
+B: 
+
+**Condition** : The start or end parametres are not of a valid type, e.g. a string instead of a date. For example, the following request will return an error:
+
+api/sol/date?start=abc&end=xyz
+
+**HTTP status code** : `400 Bad Request`
+
+**Content example** :
+
+```json
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+    "title": "One or more validation errors occurred.",
+    "status": 400,
+    "traceId": "00-c62b4ff23a0db2a617bf138120891949-16d7842e276eeec6-00",
+    "errors": {
+        "end": [
+            "The value 'xyz' is not valid."
+        ],
+        "start": [
+            "The value 'abc' is not valid."
+        ]
+    }
+}
+```
+
 ## Post
 
 Adds a new Sol. Non-mandatory attributes left out from the request body default to 0 (or in case of a date, to 0001-01-01T00:00:00). Mandadory attributes left out from the request body or attributes of the wrong type cause an error.
