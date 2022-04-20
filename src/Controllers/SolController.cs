@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Web.Http.Cors;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
@@ -18,20 +19,16 @@ namespace MarsWeatherApi.Controllers
     public class SolController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
+        private ILogger<SolController> _logger;
 
-        public SolController(ApplicationDbContext context)
+        public SolController(ApplicationDbContext context, ILogger<SolController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: api/Sol
         [HttpGet]
-        // VANHA
-        /*public async Task<ActionResult<IEnumerable<Sol>>> GetAllSols()
-        {
-            return await _context.Sols.ToListAsync();
-        }*/
-        // UUSI
         public async Task<IEnumerable<object>> GetAllSols()
         {
             return await _context
@@ -50,37 +47,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // GET: api/Sol/5
-        [HttpGet("{id}")]
-        // VANHA
-        /*public async Task<ActionResult<Sol>> GetSolById(int id)
-        {
-            var sol = await _context.Sols.FindAsync(id);
-
-            if (sol == null)
-            {
-                return NotFound();
-            }
-
-            return sol;
-        }*/
-        // VANHA
-       /* public async Task<IEnumerable<object>> GetSolById(int id)
-        {
-            return await _context
-                .Sols.Where(s => s.Id == id)
-                .Select(c => new
-                {
-                    c.Id,
-                    c.Start,
-                    c.End,
-                    c.Season,
-                    c.SolNumber,
-                    c.Wind,
-                    c.Pressure,
-                    c.Temperature
-                }).ToListAsync();
-        }*/
-        // UUSI 
+        [HttpGet("{id}")] 
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetSolById(int id)
@@ -134,8 +101,38 @@ namespace MarsWeatherApi.Controllers
             }
             else {
                 return NotFound();
+            }            
+        }
+
+        // GET: api/sol/date?start=xxx&end=xxx where "xxx" are DateTimes
+        [HttpGet("date")]
+        public IActionResult GetSolsByDate([Required] DateTime start, [Required] DateTime end)
+        {     
+            try
+            {
+                var solsfound = _context
+                .Sols.Where(s => (DateTime.Compare(s.Start, start) >=0
+                                && DateTime.Compare(s.Start, end) <0)
+                            || (DateTime.Compare(s.End, end) <=0 
+                                && DateTime.Compare(s.End, start) >0))
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Start,
+                    c.End,
+                    c.Season,
+                    c.SolNumber,
+                    c.Wind,
+                    c.Pressure,
+                    c.Temperature
+                }).ToList();
+
+                return Ok(solsfound);
             }
-            
+            catch
+            {
+                return BadRequest();
+            }
         }
 
         // PUT: api/Sol/5
@@ -167,7 +164,7 @@ namespace MarsWeatherApi.Controllers
                 }
             }
 
-            return NoContent();
+            return Ok(sol);
         }
 
         // POST: api/Sol
@@ -180,8 +177,8 @@ namespace MarsWeatherApi.Controllers
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
-            //return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);
-            return Ok(await _context.Sols.ToListAsync()); // <-- tämä vaikuttaa palauttavan, mutta SSL-sertifikaattiongelma oli
+            return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);
+            //return Ok(await _context.Sols.ToListAsync()); // <-- tämä vaikuttaa palauttavan, mutta SSL-sertifikaattiongelma oli
         }
 
         // DELETE: api/Sol/5
