@@ -71,6 +71,62 @@ B: There is data in the database; a list containing Sols is returned.
 }
 ```
 
+## Get the last seven Sols
+
+Returns the last seven Sols. Always returns a list of seven items; if there are less than seven Sols in the database, the list contains null values in their place.
+
+**URL** : `/api/sol/solweek`
+
+**Method** : `GET`
+
+**Auth required** : No
+
+### Success Response
+
+**HTTP status code** : `200 OK`
+
+**Content example** :
+
+```json
+[
+    {
+        "$id": "1",
+        "id": 315,
+        "start": "2035-02-12T08:43:34",
+        "end": "2035-02-13T09:23:09",
+        "season": "Winter",
+        "solNumber": 4002,
+        "wind": {
+            "$id": "2",
+            "id": 314,
+            "average": 530.6,
+            "minimum": 2220.3,
+            "maximum": 8740.9,
+            "mostCommonDirection": "SW",
+            "solId": 315
+        },
+        "pressure": {
+            "$id": "3",
+            "id": 315,
+            "average": 50.6,
+            "minimum": 50.3,
+            "maximum": 50.9,
+            "solId": 315
+        },
+        "temperature": {
+            "$id": "4",
+            "id": 314,
+            "average": 130.6,
+            "minimum": 5120.3,
+            "maximum": 240.9,
+            "solId": 315
+        }
+    },
+    null,
+    {...}
+]
+```
+
 ## Get one by id
 
 Returns a specific Sol by id.
