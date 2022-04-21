@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Web.Http.Cors;
 using System.ComponentModel.DataAnnotations;
+using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
@@ -133,6 +134,56 @@ namespace MarsWeatherApi.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        // GET: api/sol/solweek
+        [HttpGet("solweek")]
+        public IActionResult GetLastSevenSols()
+        {
+            try
+            {            
+                var allsols = _context
+                    .Sols
+                    .Select(c => new
+                    {
+                        c.Id,
+                        c.Start,
+                        c.End,
+                        c.Season,
+                        c.SolNumber,
+                        c.Wind,
+                        c.Pressure,
+                        c.Temperature
+                    }).ToList();
+
+                // mahdollinen sorttaus     
+
+                int lastindex = allsols.Count - 1;
+
+                var sol1 = allsols[lastindex];
+                var sol2 = allsols[lastindex - 1];
+                var sol3 = allsols[lastindex - 2];
+                var sol4 = allsols[lastindex - 3];
+                var sol5 = allsols[lastindex - 4];
+                var sol6 = allsols[lastindex - 5];
+                var sol7 = allsols[lastindex - 6];
+
+                var solweek = new ArrayList() {sol7, sol6, sol5, sol4, sol3, sol2, sol1};
+                /*solweek.Add(sol1);
+                solweek.Add(sol2);
+                solweek.Add(sol3);
+                solweek.Add(sol4);
+                solweek.Add(sol5);
+                solweek.Add(sol6);
+                solweek.Add(sol7);*/
+
+                return Ok(solweek);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
         }
 
         // PUT: api/Sol/5
