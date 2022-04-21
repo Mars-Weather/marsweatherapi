@@ -13,15 +13,14 @@ using MarsWeatherApi.Models;
 
 namespace unittests;
 
-public class DbUnitTest
+public class DbUnitTest 
 {
     private ApplicationDbContext _context;
-    private ILogger<DbUnitTest> _logger;
 
-    public DbUnitTest(ApplicationDbContext context, ILogger<DbUnitTest> logger)
+    public DbUnitTest(ApplicationDbContext context)
     {
-        _context = context;
-        _logger = logger;
+        //_context = context;
+        _context = new ApplicationDbContext();
     }
 
     [Fact]
@@ -39,26 +38,26 @@ public class DbUnitTest
     [Fact]
     public void DbConnectionExists()
     {
-        _context.Database.
+        Assert.True(_context.Database.CanConnect());
 
     }
 
     [Fact]
     public void DbIsRelational()
     {
-
+        Assert.True(_context.Database.IsRelational());
     }
 
     [Fact]
     public void DbIsNotInMemory()
     {
-
+        Assert.False(_context.Database.IsInMemory());
     }
 
     [Fact]
     public void DbIsSqlServer()
     {
-
+        Assert.True(_context.Database.IsSqlServer());
     }
 
 }
