@@ -142,6 +142,7 @@ namespace MarsWeatherApi.Controllers
         {
             try
             {            
+                // find all the sols
                 var allsols = _context
                     .Sols
                     .Select(c => new
@@ -156,10 +157,13 @@ namespace MarsWeatherApi.Controllers
                         c.Temperature
                     }).ToList();
 
-                // mahdollinen sorttaus     
+                // sort in case the solnumbers are not in order
+                allsols.Sort((x, y) => x.SolNumber.CompareTo(y.SolNumber));
 
+                // find the last index
                 int lastindex = allsols.Count - 1;
 
+                // get the last 7 sols
                 var sol1 = allsols[lastindex];
                 var sol2 = allsols[lastindex - 1];
                 var sol3 = allsols[lastindex - 2];
@@ -168,14 +172,8 @@ namespace MarsWeatherApi.Controllers
                 var sol6 = allsols[lastindex - 5];
                 var sol7 = allsols[lastindex - 6];
 
+                // add them to a new list which is then returned
                 var solweek = new ArrayList() {sol7, sol6, sol5, sol4, sol3, sol2, sol1};
-                /*solweek.Add(sol1);
-                solweek.Add(sol2);
-                solweek.Add(sol3);
-                solweek.Add(sol4);
-                solweek.Add(sol5);
-                solweek.Add(sol6);
-                solweek.Add(sol7);*/
 
                 return Ok(solweek);
             }
