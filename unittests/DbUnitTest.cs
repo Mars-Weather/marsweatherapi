@@ -1,26 +1,19 @@
 using Xunit;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using System.Web.Http.Cors;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
-using MarsWeatherApi.Models;
 
 namespace unittests;
 
-public class DbUnitTest 
+public class DbUnitTest
 {
-    private ApplicationDbContext _context;
+    private readonly ApplicationDbContext _context;
 
-    public DbUnitTest(ApplicationDbContext context)
+    public DbUnitTest()
     {
-        //_context = context;
-        _context = new ApplicationDbContext();
+        var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
+        string connectionstring = "server=localhost\\sqlexpress;database=marsweatherapidb;trusted_connection=true";
+        optionsBuilder.UseSqlServer(connectionstring);
+        _context = new ApplicationDbContext(optionsBuilder.Options);
     }
 
     [Fact]
