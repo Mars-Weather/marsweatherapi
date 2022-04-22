@@ -87,6 +87,8 @@ Returns the last seven Sols. Always returns a list of seven items; if there are 
 
 **Content example** :
 
+A: There are at least seven Sols in the database.
+
 ```json
 [
     {
@@ -121,9 +123,27 @@ Returns the last seven Sols. Always returns a list of seven items; if there are 
             "maximum": 240.9,
             "solId": 315
         }
-    },
-    null,
+    },    
+    {...},
+    {...},
+    {...},
+    {...},
+    {...},
     {...}
+]
+```
+
+B: There are no Sols in the database.
+
+```json
+[
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null
 ]
 ```
 
