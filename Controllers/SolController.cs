@@ -155,7 +155,10 @@ namespace MarsWeatherApi.Controllers
                         c.Wind,
                         c.Pressure,
                         c.Temperature
-                    }).ToList();                
+                    }).ToList();    
+
+                // initialize an ArrayList of 7 items
+                var solweek = new ArrayList() { null, null, null, null, null, null, null };
 
                 if (allsols.Count > 0) // if the database is not empty
                 {
@@ -163,10 +166,7 @@ namespace MarsWeatherApi.Controllers
                     allsols.Sort((x, y) => x.SolNumber.CompareTo(y.SolNumber));
 
                     if (allsols.Count < 7) // if there's less than a week's worth of Sols in the database
-                    {
-                        // initialize an ArrayList of 7 items
-                        var solweek = new ArrayList() { null, null, null, null, null, null, null };
-                        
+                    {    
                         for (int i = 0; i < allsols.Count; i++)
                         {
                             var sol = allsols[i];
@@ -176,27 +176,21 @@ namespace MarsWeatherApi.Controllers
                     }
                     else // if there is at least a week's worth of Sols in the database
                     {
-                        // find the last index
-                        int lastindex = allsols.Count - 1;
+                        // find the size of allsols
+                        int solstotal = allsols.Count;
 
-                        // get the last 7 sols
-                        var sol7 = allsols[lastindex];
-                        var sol6 = allsols[lastindex - 1];
-                        var sol5 = allsols[lastindex - 2];
-                        var sol4 = allsols[lastindex - 3];
-                        var sol3 = allsols[lastindex - 4];
-                        var sol2 = allsols[lastindex - 5];
-                        var sol1 = allsols[lastindex - 6];                    
-
-                        // add them to a new list which is then returned
-                        var solweek = new ArrayList() {sol1, sol2, sol3, sol4, sol5, sol6, sol7};
+                        // get the last 7 sols and add them to a new list which is then returned    
+                        for (int i = -7; i < 0; i++)
+                        {
+                            var sol = allsols[solstotal+i];
+                            solweek[i+7] = sol;
+                        }
 
                         return Ok(solweek); 
                     }                    
                 }
                 else // if the database is empty, return a list of null values
                 {
-                    var solweek = new ArrayList() { null, null, null, null, null, null, null };
                     return Ok(solweek); 
                 }              
             }
