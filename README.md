@@ -48,7 +48,9 @@ Syy siihen, että front end ei hae dataa suoraan Nasan rajapinnasta, vaan data k
 
 Koska NASAn rajapinnasta ei aina saa luotettavaa dataa [Marsin sääolosuhteiden takia](https://mars.nasa.gov/news/8858/insight-is-meeting-the-challenge-of-winter-on-dusty-mars/?site=insight), sovellus käyttää myös generoitua dataa, joka on saman muotoista kuin oikea, NASAn rajapinnasta saatava data, mutta joka ei perustu oikeisiin mittauksiin.
 
-Projektissa on kolme haaraa: master, localdb ja remotedb.
+[DbUpdateService](./Services/DbUpdateService.cs)-luokka on ajoitettu taustapalvelu, joka säännöllisin väliajoin tarkistaa, ovatko generoidun datan sisältämät Solit jo tietokannassa ja jos eivät ole, se lisää generoidun datan tietokantaan. Huomaa, että palvelu tarkistaa isoimman tietokannasta löytyvän Solnumberin ja vertaa sitä generoidun datan Solnumbereihin. Se olettaa, että Solien numerot kasvavat ajan kuluessa eteenpäin, joten jos tietokantaan luodaan manuaalisesti tai Postmanilla Sol, jonka Solnumber on suurempi kuin generoidun datan isoin Solnumber, palvelu olettaa että myös kaikki sitä pienemmät Solnumberit ovat jo tietokannassa, eikä lisää generoitua dataa.
+
+Projektissa on neljä haaraa: master, localdb, localdb-testing ja remotedb.
 
 #### Master
 - master-haara on kehityshaara.
@@ -56,7 +58,12 @@ Projektissa on kolme haaraa: master, localdb ja remotedb.
 - Endpointit ovat muotoa localhost:[portti]/api/sol
 
 #### Localdb
-- localdb-haara on testaushaara.
+- localdb-haara on kehityshaara.
+- Tietokanta on Microsoft SQL Server. Tietokanta on persistentti, mutta sinne pääsee käsiksi vain paikallisesti.
+- Endpointit ovat muotoa localhost:[portti]/api/sol
+
+#### Localdb-testing
+- localdb-testing on testaushaara. Sen sisältö on testejä lukuunottamatta muuten identtinen localdb-haaran kanssa, mutta kansiorakenne on erilainen, koska testaus .NETin testaustyökalulla ja xUnitilla vaatii, että lähdekoodi ja testauskoodi ovat erillisissä kansioissa.
 - Tietokanta on Microsoft SQL Server. Tietokanta on persistentti, mutta sinne pääsee käsiksi vain paikallisesti.
 - Endpointit ovat muotoa localhost:[portti]/api/sol
 
