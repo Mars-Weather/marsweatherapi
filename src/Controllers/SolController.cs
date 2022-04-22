@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using System.Web.Http.Cors;
 using System.ComponentModel.DataAnnotations;
+using System.Collections;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MarsWeatherApi.Contexts;
@@ -133,6 +134,71 @@ namespace MarsWeatherApi.Controllers
             {
                 return BadRequest();
             }
+        }
+
+        // GET: api/sol/solweek
+        [HttpGet("solweek")]
+        public IActionResult GetLastSevenSols()
+        {
+            try
+            {            
+                // find all the sols
+                var allsols = _context
+                    .Sols
+                    .Select(c => new
+                    {
+                        c.Id,
+                        c.Start,
+                        c.End,
+                        c.Season,
+                        c.SolNumber,
+                        c.Wind,
+                        c.Pressure,
+                        c.Temperature
+                    }).ToList();    
+
+                // initialize an ArrayList of 7 items
+                var solweek = new ArrayList() { null, null, null, null, null, null, null };
+
+                if (allsols.Count > 0) // if the database is not empty
+                {
+                    // sort in case the solnumbers are not in order
+                    allsols.Sort((x, y) => x.SolNumber.CompareTo(y.SolNumber));
+
+                    if (allsols.Count < 7) // if there's less than a week's worth of Sols in the database
+                    {    
+                        for (int i = 0; i < allsols.Count; i++)
+                        {
+                            var sol = allsols[i];
+                            solweek[i] = sol;
+                        }
+                        return Ok(solweek); 
+                    }
+                    else // if there is at least a week's worth of Sols in the database
+                    {
+                        // find the size of allsols
+                        int solstotal = allsols.Count;
+
+                        // get the last 7 sols and add them to a new list which is then returned    
+                        for (int i = -7; i < 0; i++)
+                        {
+                            var sol = allsols[solstotal+i];
+                            solweek[i+7] = sol;
+                        }
+
+                        return Ok(solweek); 
+                    }                    
+                }
+                else // if the database is empty, return a list of null values
+                {
+                    return Ok(solweek); 
+                }              
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
         }
 
         // PUT: api/Sol/5
