@@ -19,12 +19,6 @@ public class SolControllerTest
     }
 
     [Fact]
-    public void Integration_Test1()
-    {
-        Assert.True("" == "", "Integration_Test1 failed");
-    }
-
-    [Fact]
     public void CorrectSolPostReturns201()
     {
         Assert.True("" == "", "CorrectSolPostReturns201 failed");
@@ -37,13 +31,12 @@ public class SolControllerTest
     }
 
     [Fact]
-    public async void LastSevenSolsIsAListOfSeven()
+    public async void LastSevenSolsContainsSeven()
     {   
         try
         {
             // Arrange
             HttpResponseMessage response = await client.GetAsync("https://marsweather.azurewebsites.net/api/sol/solweek");
-
             response.EnsureSuccessStatusCode();
 
             // Act
@@ -51,9 +44,8 @@ public class SolControllerTest
             JsonNode solsNode = JsonNode.Parse(jsonString)!;
             JsonArray solList = solsNode!.AsArray()!;
 
-            // Assert
-            Assert.IsType<List<Sol>>(response.Content.GetType());
-            Assert.True(solList.Count == 7);
+            // Assert that the returned list contains 7 items
+            Assert.True(solList.Count == 7, "The list did not contain 7 items");
         }   
         catch(HttpRequestException e)
         {
