@@ -19,26 +19,26 @@ public class DbUnitTest
     [Fact]
     public void DbConnectionExists()
     {
-        Assert.True(_context.Database.CanConnect());
+        Assert.True(_context.Database.CanConnect(), "No databse connection exists");
 
     }
 
     [Fact]
     public void DbIsRelational()
     {
-        Assert.True(_context.Database.IsRelational());
+        Assert.True(_context.Database.IsRelational(), "Database is not relational");
     }
 
     [Fact]
     public void DbIsNotInMemory()
     {
-        Assert.False(_context.Database.IsInMemory());
+        Assert.False(_context.Database.IsInMemory(), "Database is InMemory");
     }
 
     [Fact]
     public void DbIsSqlServer()
     {
-        Assert.True(_context.Database.IsSqlServer());
+        Assert.True(_context.Database.IsSqlServer(), "Database is not SQLServer");
     }
 
 }
