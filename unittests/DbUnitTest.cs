@@ -19,8 +19,7 @@ public class DbUnitTest
     [Fact]
     public void DbConnectionExists()
     {
-        Assert.True(_context.Database.CanConnect(), "No databse connection exists");
-
+        Assert.True(_context.Database.CanConnect(), "No database connection exists");
     }
 
     [Fact]
