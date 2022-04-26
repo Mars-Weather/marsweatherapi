@@ -4,11 +4,11 @@ using MarsWeatherApi.Contexts;
 
 namespace unittests;
 
-public class DbUnitTest
+public class DbTest
 {
     private readonly ApplicationDbContext _context;
 
-    public DbUnitTest()
+    public DbTest()
     {
         var optionsBuilder = new DbContextOptionsBuilder<ApplicationDbContext>();
         string connectionstring = "server=localhost\\sqlexpress;database=marsweatherapidb;trusted_connection=true";
