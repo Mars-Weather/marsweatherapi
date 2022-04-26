@@ -37,19 +37,95 @@ public class SolControllerTest
 
         var loggerFactory = (ILoggerFactory)new LoggerFactory();
         _logger = loggerFactory.CreateLogger<SolControllerTest>();
+
+        
     }
 
     [Fact]
-    public void CorrectSolPostReturns201() // KESKEN
-    {
-        Assert.True("" == "", "CorrectSolPostReturns201 failed");
+    public async void CorrectSolPostReturns201() // KESKEN
+    {   
+        try
+        {
+            // Arrange
+            var sol = new Sol()
+            {
+                Wind = {
+                    Average = 530,
+                    Minimum = 2220,
+                    Maximum = 8740,
+                    MostCommonDirection = "SW"
+                },
+                Temperature = {
+                    Average = 130,
+                    Minimum = 5120,
+                    Maximum = 240
+                },
+                Pressure = {
+                    Average = 50,
+                    Minimum = 50,
+                    Maximum = 50
+                },
+                Start = new DateTime(2035, 12, 01, 08, 43, 34),
+                End = new DateTime(2035, 02, 13, 09, 23, 09),
+                Season = "Winter",
+                SolNumber = 1
+            };
+
+            // Act
+            var response = await client.PostAsJsonAsync("https://marsweather.azurewebsites.net/api/sol", sol);
+            response.EnsureSuccessStatusCode();
+
+            // Assert
+            Assert.True(response.StatusCode.Equals("201"), "Status code was " + response.StatusCode);
+        }
+        catch(HttpRequestException e)
+        {
+            _logger.LogError(e.Message);
+        }
+
     }
 
-    [Fact]
-    public void IncorrectSolPostReturns400() // KESKEN
+    /*[Fact]
+    public async void IncorrectSolPostReturns400() // KESKEN
     {
-        Assert.True("" == "", "IncorrectSolPostReturns");
-    }
+        try
+        {
+            // Arrange
+            var sol = @"{
+    "Wind": {
+        "Average": "530.6",
+        "Minimum": "2220.3",
+        "Maximum": "8740.9",
+        "mostCommonDirection": "SW"
+    },
+    "Temperature": {
+        "Average": 130.6,
+        "Minimum": 5120.3,
+        "Maximum": 240.9
+    },
+    "Pressure": {
+        "Average": 50.6,
+        "Minimum": 50.3,
+        "Maximum": 50.9
+    },
+    "Start": "2035-02-12T08:43:34Z",
+    "End": "2035-02-13T09:23:09Z",
+    "Season": "Winter",
+    "SolNumber": 1
+}";
+
+            // Act
+            var response = await client.PostAsJsonAsync("https://marsweather.azurewebsites.net/api/sol", sol);
+            response.EnsureSuccessStatusCode();
+
+            // Assert
+            Assert.True(response.StatusCode.Equals("201"), "Status code was " + response.StatusCode);
+        }
+        catch(HttpRequestException e)
+        {
+            _logger.LogError(e.Message);
+        }
+    }*/
 
     [Fact]
     public async void DbIsNotEmpty()
@@ -96,10 +172,5 @@ public class SolControllerTest
             _logger.LogError(e.Message);
         }  
     }
-
-
-
-
-
 
 }
