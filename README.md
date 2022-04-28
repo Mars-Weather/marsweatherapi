@@ -4,7 +4,7 @@ Tiimi: Heta Björklund, Joni Jaakkola, Christian Lindell, Dmitry Sinyavskiy ja I
 
 ## Johdanto
 
-Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi katsoa tämänhetkistä säätä, viimeisen viikon säätä, tai hakea säätiedot tietyltä päivältä. Sovellus hakee säätiedot NASAn avoimesta ["InSight: Mars Weather Service API"-rajapinnasta](api.nasa.gov/insight_weather). Lisää tietoa InSight-missiosta löytyy [täältä](https://mars.nasa.gov/insight/weather/) ja NASAn rajapinta on dokumentoitu [täällä](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf).
+Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi katsoa tämänhetkistä säätä, viimeisen viikon säätä, tai hakea säätiedot tietyltä päivältä. Sovellus näyttää myös tilastotietoa sään vaihtelusta. Sovellus hakee säätiedot NASAn avoimesta ["InSight: Mars Weather Service API"-rajapinnasta](api.nasa.gov/insight_weather). Lisää tietoa InSight-missiosta löytyy [täältä](https://mars.nasa.gov/insight/weather/) ja NASAn rajapinta on dokumentoitu [täällä](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf).
 
 ## Järjestelmän määrittely
 
@@ -67,7 +67,7 @@ Back endin GitHub-repositorio löytyy osoitteesta https://github.com/Mars-Weathe
 
 Syy siihen, että front end ei hae dataa suoraan Nasan rajapinnasta, vaan data kierrätetään oman back endin ja tietokannan kautta, on se, että vanhaa dataa voidaan tallentaa, näyttää historiatietoja (eikä ainoastaan viimeisintä 7 solia, jonka Nasan rajapinta palauttaa) ja luoda tilastoja sään vaihtelusta.
 
-Koska NASAn rajapinnasta ei aina saa luotettavaa dataa [Marsin sääolosuhteiden takia](https://mars.nasa.gov/news/8858/insight-is-meeting-the-challenge-of-winter-on-dusty-mars/?site=insight), sovellus käyttää myös generoitua dataa, joka on saman muotoista kuin oikea, NASAn rajapinnasta saatava data, mutta joka ei perustu oikeisiin mittauksiin.
+Koska NASAn rajapinnasta ei aina saa luotettavaa dataa [Marsin sääolosuhteiden takia](https://mars.nasa.gov/news/8858/insight-is-meeting-the-challenge-of-winter-on-dusty-mars/?site=insight), sovellus käyttää myös generoitua dataa, joka on saman muotoista kuin oikea, NASAn rajapinnasta saatava data, mutta joka ei perustu oikeisiin mittauksiin. Generoitu data on luotu [JSON Generatorilla](https://json-generator.com/).
 
 [DbUpdateService](./Services/DbUpdateService.cs)-luokka on ajoitettu taustapalvelu, joka säännöllisin väliajoin tarkistaa, ovatko generoidun datan sisältämät Solit jo tietokannassa ja jos eivät ole, se lisää generoidun datan tietokantaan. Huomaa, että palvelu tarkistaa isoimman tietokannasta löytyvän Solnumberin ja vertaa sitä generoidun datan Solnumbereihin. Se olettaa, että Solien numerot kasvavat ajan kuluessa eteenpäin, joten jos tietokantaan luodaan manuaalisesti tai Postmanilla Sol, jonka Solnumber on suurempi kuin generoidun datan isoin Solnumber, palvelu olettaa että myös kaikki sitä pienemmät Solnumberit ovat jo tietokannassa, eikä lisää generoitua dataa.
 
