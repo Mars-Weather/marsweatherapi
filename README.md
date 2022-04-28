@@ -105,8 +105,24 @@ Julkaistun front endin osoite on https://weather-mars.herokuapp.com/
 
 ## Testaus
 
-Tulossa.
+Sovelluksen testaukseen on käytetty .NETin omaa sisäänrakennettua testaustyökalua (*dotnet test*) ja [xUnit-testaustyökalua](https://xunit.net/). Seurasin [Microsofin ohjetta testien luomiseksi](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test). Yksikkötestit testaavat paikallista tietokantaa ja integraatiotestit Sol-luokan controlleria ja julkaistun sovelluksen palvelimella sijaitsevaa tietokantaa.
 
+Testaaminen on toteutettu Mars Weather -projektiin omana haaranaan nimeltä [localdb-testing](https://github.com/Mars-Weather/marsweatherapi/tree/localdb-testing). Sen sisältö on testejä lukuunottamatta muuten identtinen paikallista tietokantaa käyttävän localdb-haaran kanssa, mutta kansiorakenne on erilainen, koska testaus .NETin testaustyökalulla ja xUnitilla vaatii, että lähdekoodi ja testauskoodi ovat erillisissä kansioissa.
 
+Testien ajaminen onnistuu komennolla *dotnet test*. Erilliset testiprojektit yksikkö- ja integraatiotesteille mahdollistavat sen, että yksikkö- ja integraatiotestit voi ajaa erikseen. Siirtymällä testiprojektikansioon (*cd ./unittests* tai *cd ./integrationtests*), siitä kansiosta komennolla *dotnet test* ajetaan vain kyseisen kansion testit. Jos komennon kirjoittaa koko projektin juuressa, ajetaan yhdellä kertaa sekä yksikkö- että integraatiotestit.
 
+### Yksikkötestit
 
+Paikallista tietokantaa testaavat yksikkötestit ovat tiedostossa [DbTest.cs](https://github.com/Mars-Weather/marsweatherapi/blob/localdb-testing/unittests/DbTest.cs).
+* DbConnectionExists tarkistaa, onnistuuko yhteyden avaaminen.
+* DbIsRelational tarkistaa, että tietokanta on relaatiotietokanta.
+* DbIsNotInMemory tarkistaa, että tietokanta ei ole InMemory-tietokanta.
+* DbIsSqlServer tarkistaa, että tietokanta on SQLServer.
+
+### Integraatiotestit
+
+SolControlleria ja julkaistun sovelluksen palvelimella sijaitsevaa tietokantaa testaavat integraatiotestit ovat tiedostossa [SolController.cs](https://github.com/Mars-Weather/marsweatherapi/blob/localdb-testing/integrationtests/SolControllerTest.cs).
+* DbIsNotEmpty tarkistaa, että tietokannassa on tietoja (tietokanta täytetään sovelluksen käynnistyessä, joten sen ei pitäisi olla tyhjä). Se lähettää GET-pyynnön julkaistun sovelluksen polkuun https://marsweather.azurewebsites.net/api/sol, jonka pitäisi palauttaa kaikki tietokannan Solit. Testi tarkistaa, että vastauksena saadun listan koko ei ole 0.
+* LastSevenSolsContainsSeven lähettää GET-pyynnön julkaistun sovelluksen polkuun https://marsweather.azurewebsites.net/api/sol/solweek, jonka pitäisi palauttaa viimeisimmät seitsemän Solia. Testi tarkistaa, että vastauksena saadun listan koko on 7.
+
+Testattaviksi kohteiksi valikoituivat paikallinen tietokanta (sen yhteyden toimiminen ja tietokannan ominaisuudet), yksi controlleri ja palvelimella sijaitseva tietokanta (vastaanottaako controlleri pyynnön ja palautuuko tietokannasta sitä, mitä oletetaan). Testaaminen on rajallista, koska vain yhtä controlleria testataan ja vain GET-pyynnöillä. Laajempi testaaminen vaatisi myös muiden controllerien testaamisen ja myös muilla kuin GET-pyynnöillä.
