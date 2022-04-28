@@ -8,7 +8,7 @@ Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi ka
 
 ## Järjestelmän määrittely
 
-Alla kuvattuna järjestelmän tarpeet tarkemmin käyttäjätarinoiden kautta.
+Alla kuvattuna järjestelmän tarpeet tarkemmin käyttäjätarinoiden ja niistä johdettujen vaatimusten kautta.
 
 ### Käyttäjätarinat
 
@@ -31,6 +31,27 @@ KT8 Tulevana avaruusmatkailijana haluan saada lämpötilatiedot eri lämpötilay
 KT9 Tähtitieteen opiskelijana haluan saada mahdollisia tilastotietoja (esim. Päivän/viikon/vuoden matalin ja korkein lämpötila, tuulen keskinopeus).
 
 KT10 Avaruusmatkailijana haluaisin tietää tulevaa säätä, mutta jos sovellus ei tee sääennustuksia, minua auttaisi, jos olisi mahdollista saada tiedot valitulle päivälle, esimerkiksi sää X päivänä vuosi sitten.
+
+### Käyttäjätarinoista johdetut vaatimukset
+
+Yleisellä tasolla esitellyt vaatimukset, jotka nousevat käyttäjätarinoista. Vaatimuksen perässä on suluissa merkitty käyttäjätarinat, joista vaatimus tulee. Vaatimuksista osa on toteutettu, ja osan kohdalla on todettu, ettei niiden toteuttaminen ole tämän projektin puitteissa prioriteetti ja nämä vaatimukset on poistettu työjonosta. Niihin on kuitenkin mahdollista palata tulevaisuudessa, jos projektia halutaan jatkokehittää.
+
+#### Toteutetut vaatimukset
+
+* Sovellus näyttää tämänhetkisen säätilan Marsissa (KT1).
+* Käyttäjä voi valita, mitä tietoja näkee sovelluksessa (KT2).
+* Käyttöliittymä on intuitiivinen (KT2).
+* Backend hoitaa tietojen haun, lajittelun/suodatuksen/koosteiden teon ja kertoo frontendille vain sen, mitä frontend tarvitsee näyttääkseen näkymän oikein. Frontend ei käsittele tietoja itse (KT4, KT5).
+* Palvelu esittää tiedon helposti jatkokäytettävässä/jatkokehitettävässä/uudelleenkäytettävässä muodossa (KT6).
+* Sovellus näyttää Marsin sään viimeisen viikon ajalta (KT7).
+* Mahdollisuus tehdä tiedoista tilastoja tai keskiarvoja pidemmältä aikaväliltä (KT9).
+* Mennyttä säätä voi tarkastella päivän tarkkuudella (KT10).
+
+#### Työjonosta poistetut vaatimukset
+
+* Backend hakee tietoa monesta eri APIsta ja yhdistää tiedot käyttäjälle (KT3, KT4, KT5).
+* Sovellus näyttää samanaikaista tietoa monesta eri paikasta, jolloin tietoja pystyy korreloimaan keskenään (KT4).
+* Tulevaa säätä voi ennustaa (KT10).
 
 ## Luokkakaavio
 
