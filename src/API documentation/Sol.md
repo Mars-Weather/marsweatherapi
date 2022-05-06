@@ -2,6 +2,8 @@
 
 **Route** : `/api/sol/`
 
+**Authorization** : GET requests do not require authorization. All other requests require an admin API key as a request parametre; otherwise they return the HTTP status code `401 Unauthorized`.
+
 ## Get all
 
 Returns all the Sols in the database.
@@ -525,7 +527,7 @@ Returns the created Sol.
 
 ### Error Response
 
-A
+A:
 
 **Condition** : Type error in the request body, e.g. an attribute is a Boolean when a String was expected.
 
@@ -547,7 +549,7 @@ A
 }
 ```
 
-B
+B:
 
 **Condition** : Mandatory attribute(s) missing from the request body.
 
@@ -659,13 +661,13 @@ Modifies an existing Sol by id. Non-mandatory attributes left out from the reque
 
 ### Error Response
 
-A
+A:
 
 **Condition** : Sol with the given id does not exist.
 
 **HTTP status code** : `404 Not Found`
 
-B
+B:
 
 **Condition** : Type error in the request body, e.g. an attribute is a Boolean when a String was expected.
 
