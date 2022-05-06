@@ -115,8 +115,7 @@ namespace MarsWeatherApi.Controllers
             if (id != pressure.Id)
             {
                 return BadRequest();
-            }
-            
+            }           
 
             _context.Entry(pressure).State = EntityState.Modified;
 
@@ -164,11 +163,11 @@ namespace MarsWeatherApi.Controllers
             {
                 return Unauthorized();
             }
+            var pressure = await _context.Pressures.FindAsync(id);
             if (pressure == null)
             {
                 return NotFound();
-            }
-            var pressure = await _context.Pressures.FindAsync(id);
+            }            
             _context.Pressures.Remove(pressure);
             await _context.SaveChangesAsync();
 
