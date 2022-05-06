@@ -17,11 +17,13 @@ namespace MarsWeatherApi.Controllers
     [ApiController]
     public class PressureController : ControllerBase
     {
+        private readonly IConfiguration _config;
         private readonly ApplicationDbContext _context;
 
-        public PressureController(ApplicationDbContext context)
+        public PressureController(ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
         // GET: api/Pressure
@@ -104,12 +106,17 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPressure(int id, Pressure pressure)
+        public async Task<IActionResult> PutPressure(int id, Pressure pressure, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             if (id != pressure.Id)
             {
                 return BadRequest();
             }
+            
 
             _context.Entry(pressure).State = EntityState.Modified;
 
@@ -136,8 +143,12 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPost]
-        public async Task<ActionResult<Pressure>> PostPressure(Pressure pressure)
+        public async Task<ActionResult<Pressure>> PostPressure(Pressure pressure, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             _context.Pressures.Add(pressure);
             await _context.SaveChangesAsync();
 
@@ -147,14 +158,17 @@ namespace MarsWeatherApi.Controllers
         // DELETE: api/Pressure/5
         [DisableCors]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeletePressure(int id)
-        {
-            var pressure = await _context.Pressures.FindAsync(id);
+        public async Task<IActionResult> DeletePressure(int id, string marsApikey)
+        {            
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             if (pressure == null)
             {
                 return NotFound();
             }
-
+            var pressure = await _context.Pressures.FindAsync(id);
             _context.Pressures.Remove(pressure);
             await _context.SaveChangesAsync();
 
