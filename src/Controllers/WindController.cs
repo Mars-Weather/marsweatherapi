@@ -25,13 +25,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // GET: api/Wind
-        [HttpGet]
-        // VANHA
-        /*public async Task<ActionResult<IEnumerable<Wind>>> GetWinds()
-        {
-            return await _context.Winds.ToListAsync();
-        }*/
-        // UUSI
+        [HttpGet]        
         public async Task<IEnumerable<object>> GetAllWinds()
         {
             return await _context
@@ -48,35 +42,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // GET: api/Wind/5
-        [HttpGet("{id}")]
-        // VANHA
-        /*public async Task<ActionResult<Wind>> GetWindById(int id)
-        {
-            var wind = await _context.Winds.FindAsync(id);
-
-            if (wind == null)
-            {
-                return NotFound();
-            }
-
-            return wind;
-        }*/
-        // VANHA
-        /*public async Task<IEnumerable<object>> GetWindById(int id)
-        {
-            return await _context
-                .Winds.Where(s => s.Id == id)
-                .Select(c => new
-                {
-                    c.Id,
-                    c.Average,
-                    c.Minimum,
-                    c.Maximum,
-                    c.MostCommonDirection,
-                    c.SolId
-                }).ToListAsync();
-        }*/
-        // UUSI
+        [HttpGet("{id}")]        
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetWindById(int id)
@@ -142,8 +108,6 @@ namespace MarsWeatherApi.Controllers
         {
             _context.Winds.Add(wind);
             await _context.SaveChangesAsync();
-            
-            //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
             return CreatedAtAction(nameof(GetWindById), new { id = wind.Id }, wind);
         }
 
