@@ -93,7 +93,7 @@ Projektissa on neljä haaraa: master, localdb, localdb-testing ja remotedb.
 - Tietokanta on MySQL. Tietokanta on persistentti ja sitä voi hallinnoida ja muokata Azuren dashboardin kautta (ei julkinen, vain tiimin jäsenten saatavilla).
 - Tietokantaa voi tarkastella myös lähettämällä GET-pyyntöjä Postmanilla. Avoin pyyntökokoelma löytyy osoitteesta https://www.postman.com/hetabjorklund/workspace/mars-weather-public/
 - Julkaistun sovelluksen osoite on https://marsweather.azurewebsites.net/
-- Endpointit ovat muotoa https://marsweather.azurewebsites.net/api/sol
+- Endpointit ovat muotoa https://marsweather.azurewebsites.net/api/sol. GET-pyynnöt ovat avoimia, kaikki muut pyynnöt vaativat API-avaimen pyyntöparametrina (vain tiimin jäsenten saatavilla).
 
 ### Front end
 
