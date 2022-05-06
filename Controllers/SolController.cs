@@ -24,7 +24,7 @@ namespace MarsWeatherApi.Controllers
 
         private readonly IConfiguration _config;
 
-        public SolController(ApplicationDbContext context, ILogger<SolController> logger,IConfiguration config)
+        public SolController(ApplicationDbContext context, ILogger<SolController> logger, IConfiguration config)
         {
             _context = context;
             _logger = logger;
@@ -85,7 +85,6 @@ namespace MarsWeatherApi.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetSolBySolNumber(int solNumber)
         {
-
             var solfound = _context
                 .Sols.Where(s => s.SolNumber == solNumber)
                 .Select(c => new
@@ -253,10 +252,7 @@ namespace MarsWeatherApi.Controllers
             _context.Sols.Add(sol);
             await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
-            return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);
-            //return Ok(await _context.Sols.ToListAsync()); // <-- tämä vaikuttaa palauttavan, mutta SSL-sertifikaattiongelma oli
-            
+            return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);            
         }
 
         // DELETE: api/Sol/5
