@@ -19,9 +19,12 @@ namespace MarsWeatherApi.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public TemperatureController(ApplicationDbContext context)
+        private readonly IConfiguration _config;
+
+        public TemperatureController(ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
         // GET: api/Temperature
@@ -104,8 +107,12 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutTemperature(int id, Temperature temperature)
+        public async Task<IActionResult> PutTemperature(int id, Temperature temperature, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             if (id != temperature.Id)
             {
                 return BadRequest();
@@ -136,8 +143,12 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPost]
-        public async Task<ActionResult<Temperature>> PostTemperature(Temperature temperature)
+        public async Task<ActionResult<Temperature>> PostTemperature(Temperature temperature, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             _context.Temperatures.Add(temperature);
             await _context.SaveChangesAsync();
 
@@ -148,8 +159,12 @@ namespace MarsWeatherApi.Controllers
         // DELETE: api/Temperature/5
         [DisableCors]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteTemperature(int id)
+        public async Task<IActionResult> DeleteTemperature(int id, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             var temperature = await _context.Temperatures.FindAsync(id);
             if (temperature == null)
             {

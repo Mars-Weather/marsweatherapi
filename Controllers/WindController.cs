@@ -19,9 +19,12 @@ namespace MarsWeatherApi.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public WindController(ApplicationDbContext context)
+        private readonly IConfiguration _config;
+
+        public WindController(ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
+            _config = config;
         }
 
         // GET: api/Wind
@@ -106,8 +109,12 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutWind(int id, Wind wind)
+        public async Task<IActionResult> PutWind(int id, Wind wind, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             if (id != wind.Id)
             {
                 return BadRequest();
@@ -138,8 +145,12 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPost]
-        public async Task<ActionResult<Wind>> PostWind(Wind wind)
+        public async Task<ActionResult<Wind>> PostWind(Wind wind, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             _context.Winds.Add(wind);
             await _context.SaveChangesAsync();
             
@@ -150,8 +161,12 @@ namespace MarsWeatherApi.Controllers
         // DELETE: api/Wind/5
         [DisableCors]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteWind(int id)
+        public async Task<IActionResult> DeleteWind(int id, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             var wind = await _context.Winds.FindAsync(id);
             if (wind == null)
             {
