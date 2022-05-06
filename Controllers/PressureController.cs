@@ -27,13 +27,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // GET: api/Pressure
-        [HttpGet]
-        // VANHA
-        /*public async Task<ActionResult<IEnumerable<Pressure>>> GetAllPressures()
-        {
-            return await _context.Pressures.ToListAsync();
-        }*/
-        // UUSI
+        [HttpGet]        
         public async Task<IEnumerable<object>> GetAllPressures()
         {
             return await _context
@@ -49,35 +43,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // GET: api/Pressure/5
-        [HttpGet("{id}")]
-        // VANHA
-        /*public async Task<ActionResult<Pressure>> GetPressureById(int id)
-        {
-            var pressure = await _context.Pressures.FindAsync(id);
-
-            if (pressure == null)
-            {
-                return NotFound();
-            }
-
-            return pressure;
-        }*/
-        // VANHA
-        /*
-        public async Task<IEnumerable<object>> GetPressureById(int id)
-        {
-            return await _context
-                .Pressures.Where(s => s.Id == id)
-                .Select(c => new
-                {
-                    c.Id,
-                    c.Average,
-                    c.Minimum,
-                    c.Maximum,
-                    c.SolId
-                }).ToListAsync();
-        } */
-        // UUSI
+        [HttpGet("{id}")]        
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetPressureById(int id)

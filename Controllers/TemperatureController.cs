@@ -18,9 +18,8 @@ namespace MarsWeatherApi.Controllers
     public class TemperatureController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
-
-        private readonly IConfiguration _config;
-
+        private readonly IConfiguration _config;       
+        
         public TemperatureController(ApplicationDbContext context, IConfiguration config)
         {
             _context = context;
@@ -29,12 +28,6 @@ namespace MarsWeatherApi.Controllers
 
         // GET: api/Temperature
         [HttpGet]
-        // VANHA
-        /*public async Task<ActionResult<IEnumerable<Temperature>>> GetAllTemperatures()
-        {
-            return await _context.Temperatures.ToListAsync();
-        }*/
-        // UUSI
         public async Task<IEnumerable<object>> GetAllTemperatures()
         {
             return await _context
@@ -50,35 +43,7 @@ namespace MarsWeatherApi.Controllers
         }
 
         // GET: api/Temperature/5
-        [HttpGet("{id}")]
-        // VANHA
-        /*public async Task<ActionResult<Temperature>> GetTemperatureById(int id)
-        {
-            var temperature = await _context.Temperatures.FindAsync(id);
-
-            if (temperature == null)
-            {
-                return NotFound();
-            }
-
-            return temperature;
-        }*/
-        // VANHA
-        /*
-        public async Task<IEnumerable<object>> GetTemperatureById(int id)
-        {
-            return await _context
-                .Temperatures.Where(s => s.Id == id)
-                .Select(c => new
-                {
-                    c.Id,
-                    c.Average,
-                    c.Minimum,
-                    c.Maximum,
-                    c.SolId
-                }).ToListAsync();
-        } */
-        // UUSI
+        [HttpGet("{id}")]        
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(Task<IEnumerable<object>>))]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public IActionResult GetTemperatureById(int id)
@@ -152,7 +117,6 @@ namespace MarsWeatherApi.Controllers
             _context.Temperatures.Add(temperature);
             await _context.SaveChangesAsync();
 
-            //return CreatedAtAction("GetTemperature", new { id = temperature.Id }, temperature);
             return CreatedAtAction(nameof(GetTemperatureById), new { id = temperature.Id }, temperature);
         }
 
