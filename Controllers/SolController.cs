@@ -22,10 +22,13 @@ namespace MarsWeatherApi.Controllers
         private readonly ApplicationDbContext _context;
         private ILogger<SolController> _logger;
 
-        public SolController(ApplicationDbContext context, ILogger<SolController> logger)
+        private readonly IConfiguration _config;
+
+        public SolController(ApplicationDbContext context, ILogger<SolController> logger,IConfiguration config)
         {
             _context = context;
             _logger = logger;
+            _config = config;
         }
 
         // GET: api/Sol
@@ -205,12 +208,16 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSol(int id, Sol sol)
+        public async Task<IActionResult> PutSol(int id, Sol sol, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             if (id != sol.Id)
             {
                 return BadRequest();
-            }
+            }            
 
             _context.Entry(sol).State = EntityState.Modified;
 
@@ -237,27 +244,35 @@ namespace MarsWeatherApi.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [DisableCors]
         [HttpPost]
-        public async Task<ActionResult<Sol>> PostSol(Sol sol)
+        public async Task<ActionResult<Sol>> PostSol(Sol sol, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             _context.Sols.Add(sol);
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetSol", new { id = sol.Id }, sol);
             return CreatedAtAction(nameof(GetSolById), new { id = sol.Id }, sol);
             //return Ok(await _context.Sols.ToListAsync()); // <-- tämä vaikuttaa palauttavan, mutta SSL-sertifikaattiongelma oli
+            
         }
 
         // DELETE: api/Sol/5
         [DisableCors]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteSol(int id)
+        public async Task<IActionResult> DeleteSol(int id, string marsApikey)
         {
+            if (marsApikey != _config["marsApikey"])
+            {
+                return Unauthorized();
+            }
             var sol = await _context.Sols.FindAsync(id);
             if (sol == null)
             {
                 return NotFound();
             }
-
             _context.Sols.Remove(sol);
             await _context.SaveChangesAsync();
 
