@@ -64,7 +64,7 @@ B: There is data in the database; a list containing Wind objects is returned.
         },
         {...}
     ]
-    ```
+```
 
 ## Get one by id
 
