@@ -619,7 +619,7 @@ Modifies an existing Sol by id. Non-mandatory attributes left out from the reque
 
 **Condition** : Sol with the given id exists, modified successfully.
 
-**HTTP status code** : `204 No Content`
+**HTTP status code** : `200 OK`
 
 **Content example** :
 

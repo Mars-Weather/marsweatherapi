@@ -123,11 +123,11 @@ Adds a new Wind object. Non-mandatory attributes left out from the request body 
 
 ```json
 {
-"average": 530.6,
-"minimum": 2220.3,
-"maximum": 8740.9,
-"mostCommonDirection": "SW",
-"solId": 3
+    "average": 530.6,
+    "minimum": 2220.3,
+    "maximum": 8740.9,
+    "mostCommonDirection": "SW",
+    "solId": 3
 }
 ```
 
@@ -189,11 +189,11 @@ Modifies an existing Wind object specified by id. Non-mandatory attributes left 
 
 ```json
 {
-"average": 530.6,
-"minimum": 2220.3,
-"maximum": 8740.9,
-"mostCommonDirection": "WSW",
-"solId": 3
+    "average": 530.6,
+    "minimum": 2220.3,
+    "maximum": 8740.9,
+    "mostCommonDirection": "WSW",
+    "solId": 3
 }
 ```
 
