@@ -21,7 +21,10 @@ Returns a list of all Temperatures.
 A: There is no data in the database; an empty list is returned.
 
 ```json
-    []
+{
+    "$id": "1",
+    "$values": []
+}
 ```
 
 B: There is data in the database; a list containing Temperatures is returned.
@@ -46,6 +49,7 @@ B: There is data in the database; a list containing Temperatures is returned.
     }
 ]
 ```
+
 ## Get one by id
 
 Returns a specific Temperature by id.
@@ -67,15 +71,16 @@ Returns a specific Temperature by id.
 Returns requested Temperature.
 
 ```json
-    {
-        "$id": "2",
-        "id": 1,
-        "average": -148.618,
-        "minimum": -50.991,
-        "maximum": -24.596,
-        "solId": 1                                
-    }
+{
+    "$id": "2",
+    "id": 1,
+    "average": -148.618,
+    "minimum": -50.991,
+    "maximum": -24.596,
+    "solId": 1                                
+}
 ```
+
 ### Error Response
 
 **Condition** : Temperature with the given id does not exist.
@@ -95,13 +100,14 @@ Adds a new Temperature. Mandadory attributes left out from the request body caus
 **Request body example** :
 
 ```json
-    {
-        "id": 36,
-        "average": -93.478,
-        "minimum": -87.446,
-        "maximum": -32.809
-    }
+{
+    "id": 36,
+    "average": -93.478,
+    "minimum": -87.446,
+    "maximum": -32.809
+}
 ```
+
 ### Success Response
 
 **Condition** : Temperature was created successfully.
@@ -113,15 +119,16 @@ Adds a new Temperature. Mandadory attributes left out from the request body caus
 Returns created Temperature.
 
 ```json
-    {
-        "$id": "36",
-        "id": 36,
-        "average": -93.478,
-        "minimum": -87.446,
-        "maximum": -32.809,
-        "solId": 36                                
-    }
+{
+    "$id": "36",
+    "id": 36,
+    "average": -93.478,
+    "minimum": -87.446,
+    "maximum": -32.809,
+    "solId": 36                                
+}
 ```
+
 ### Error Response
 
 A
@@ -133,16 +140,16 @@ A
 **Content example** :
 
 ```json
-    {
-        "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
-        "title": "One or more validation errors occurred.",
-        "status": 400,
-        "traceId": "00-673d978370b7ff12f36c40b18faab7b9-bd87bfbdff0ce12e-00",
-        "errors": {
-            "$.average": [
-                "The JSON value could not be converted to System.ToDouble. Path: $.average | LineNumber: 3 | BytePositionInLine: 18."
-            ]
-        }
+{
+    "type": "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+    "title": "One or more validation errors occurred.",
+    "status": 400,
+    "traceId": "00-673d978370b7ff12f36c40b18faab7b9-bd87bfbdff0ce12e-00",
+    "errors": {
+        "$.average": [
+            "The JSON value could not be converted to System.ToDouble. Path: $.average | LineNumber: 3 | BytePositionInLine: 18."
+        ]
+    }
 }
 ```
 
@@ -170,6 +177,7 @@ B
     }
 }
 ```
+
 ## Put
 
 Modifies an existing Temperature by id.
@@ -183,12 +191,12 @@ Modifies an existing Temperature by id.
 **Request body example** :
 
 ```json
-    {
-        "id": 36,
-        "average": -90.5,
-        "minimum": -75.6,
-        "maximum": -30.9
-    }
+{
+    "id": 36,
+    "average": -90.5,
+    "minimum": -75.6,
+    "maximum": -30.9
+}
 ```
 
 ### Success Response

@@ -130,7 +130,6 @@ Returns the requested Pressure.
 
 **HTTP status code** : `404 Not Found`
 
-
 ## Post
 
 Adds a new Pressure. Mandadory attributes left out from the request body or attributes of the wrong type cause an error.
@@ -144,13 +143,11 @@ Adds a new Pressure. Mandadory attributes left out from the request body or attr
 **Request body example** :
 
 ```json
-{
-    
+{    
     "average": 761.1285,
     "minimum": 756.1563,
     "maximum": 761.1285,
-    "solId": 3
-    
+    "solId": 3    
 }
 ```
 
@@ -217,8 +214,7 @@ Modifies an existing Pressure by id. Mandadory attributes left out from the requ
     "average": 761.1234,
     "minimum": 756.5678,
     "maximum": 761.9876,
-    "solId": 3
-    
+    "solId": 3    
 }
 ```
 
