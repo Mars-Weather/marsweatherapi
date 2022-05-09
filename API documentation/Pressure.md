@@ -130,7 +130,6 @@ Returns the requested Pressure.
 
 **HTTP status code** : `404 Not Found`
 
-
 ## Post
 
 Adds a new Pressure. Mandadory attributes left out from the request body or attributes of the wrong type cause an error.

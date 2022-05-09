@@ -689,7 +689,7 @@ B:
 }
 ```
 
-C
+C:
 
 **Condition** : Missing attribute in the request body.
 

@@ -21,7 +21,10 @@ Returns a list of all Temperatures.
 A: There is no data in the database; an empty list is returned.
 
 ```json
-[]
+{
+    "$id": "1",
+    "$values": []
+}
 ```
 
 B: There is data in the database; a list containing Temperatures is returned.
@@ -46,6 +49,7 @@ B: There is data in the database; a list containing Temperatures is returned.
     }
 ]
 ```
+
 ## Get one by id
 
 Returns a specific Temperature by id.
@@ -76,6 +80,7 @@ Returns requested Temperature.
     "solId": 1                                
 }
 ```
+
 ### Error Response
 
 **Condition** : Temperature with the given id does not exist.
@@ -102,6 +107,7 @@ Adds a new Temperature. Mandadory attributes left out from the request body caus
     "maximum": -32.809
 }
 ```
+
 ### Success Response
 
 **Condition** : Temperature was created successfully.
@@ -122,6 +128,7 @@ Returns created Temperature.
     "solId": 36                                
 }
 ```
+
 ### Error Response
 
 A
@@ -170,6 +177,7 @@ B
     }
 }
 ```
+
 ## Put
 
 Modifies an existing Temperature by id.
