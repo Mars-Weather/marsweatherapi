@@ -4,7 +4,7 @@ Tiimi: Heta Björklund, Joni Jaakkola, Christian Lindell, Dmitry Sinyavskiy ja I
 
 ## Johdanto
 
-Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi katsoa tämänhetkistä säätä, viimeisen viikon säätä, tai hakea säätiedot tietyltä päivältä. Sovellus näyttää myös tilastotietoa sään vaihtelusta. Sovellus hakee säätiedot NASAn avoimesta ["InSight: Mars Weather Service API"-rajapinnasta](api.nasa.gov/insight_weather). Lisää tietoa InSight-missiosta löytyy [täältä](https://mars.nasa.gov/insight/weather/) ja NASAn rajapinta on dokumentoitu [täällä](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf).
+Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi katsoa tämänhetkistä säätä, viimeisen viikon säätä, tai hakea säätiedot tietyltä päivältä. Sovellus näyttää myös tilastotietoa sään vaihtelusta. Sovellus hakee säätiedot NASAn avoimesta ["InSight: Mars Weather Service API"-rajapinnasta](https://mars.nasa.gov/insight/weather/), joka on dokumentoitu [täällä](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf). Lisää tietoa InSight-missiosta löytyy [täältä](https://mars.nasa.gov/insight/).
 
 ## Järjestelmän määrittely
 
