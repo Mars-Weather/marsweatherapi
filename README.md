@@ -4,7 +4,7 @@ Tiimi: Heta Björklund, Joni Jaakkola, Christian Lindell, Dmitry Sinyavskiy ja I
 
 ## Johdanto
 
-Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi katsoa tämänhetkistä säätä, viimeisen viikon säätä, tai hakea säätiedot tietyltä päivältä. Sovellus näyttää myös tilastotietoa sään vaihtelusta. Sovellus hakee säätiedot NASAn avoimesta ["InSight: Mars Weather Service API"-rajapinnasta](https://mars.nasa.gov/insight/weather/), joka on dokumentoitu [täällä](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf). NASAn tuottama data on [julkista ja avointa käyttää](https://www.nasa.gov/FOIA/index.html). Lisää tietoa InSight-missiosta löytyy [täältä](https://mars.nasa.gov/insight/).
+Mars Weather on sääsovellus, joka näyttää Marsin sään. Käyttäjä voi katsoa tämänhetkistä säätä, viimeisen viikon säätä, tai hakea säätiedot tietyltä päivältä. Sovellus näyttää myös tilastotietoa sään vaihtelusta. Sovellus hakee säätiedot NASAn avoimesta ["InSight: Mars Weather Service API"-rajapinnasta](https://mars.nasa.gov/insight/weather/), joka on dokumentoitu [täällä](https://api.nasa.gov/assets/insight/InSight%20Weather%20API%20Documentation.pdf). NASAn tuottama data on [julkista ja avointa käyttää](https://project-open-data.cio.gov/policy-memo/#c-ensure-information-stewardship-through-the-use-of-open-licenses). Lisää tietoa InSight-missiosta löytyy [täältä](https://mars.nasa.gov/insight/).
 
 ## Järjestelmän määrittely
 
@@ -105,7 +105,7 @@ Julkaistun front endin osoite on https://weather-mars.herokuapp.com/
 
 ## Testaus
 
-Sovelluksen testaukseen on käytetty .NETin omaa sisäänrakennettua testaustyökalua (*dotnet test*) ja [xUnit-testaustyökalua](https://xunit.net/). Seurasin [Microsofin ohjetta testien luomiseksi](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test). Yksikkötestit testaavat paikallista tietokantaa ja integraatiotestit Sol-luokan controlleria ja julkaistun sovelluksen palvelimella sijaitsevaa tietokantaa.
+Sovelluksen kaikkia rajapintoja on manuaalisesti testattu Postmanilla. Sovelluksen automaattiseen testaukseen on käytetty .NETin omaa sisäänrakennettua testaustyökalua (*dotnet test*) ja [xUnit-testaustyökalua](https://xunit.net/). Seurasin [Microsofin ohjetta testien luomiseksi](https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test). Yksikkötestit testaavat paikallista tietokantaa ja integraatiotestit Sol-luokan controlleria ja julkaistun sovelluksen palvelimella sijaitsevaa tietokantaa.
 
 Testaaminen on toteutettu Mars Weather -projektiin omana haaranaan nimeltä [localdb-testing](https://github.com/Mars-Weather/marsweatherapi/tree/localdb-testing). Sen sisältö on testejä lukuunottamatta muuten identtinen paikallista tietokantaa käyttävän localdb-haaran kanssa, mutta kansiorakenne on erilainen, koska testaus .NETin testaustyökalulla ja xUnitilla vaatii, että lähdekoodi ja testauskoodi ovat erillisissä kansioissa.
 
